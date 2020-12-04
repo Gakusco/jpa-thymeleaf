@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="shared/head :: head">
+    <meta charset="UTF-8">
+    <title>Create customer</title>
+</head>
+<body>
+<div th:replace="shared/menu :: navbar"></div>
+    <div class="card m-4">
+        <div class="card-header">
+            <h2>Create customer</h2>
+        </div>
+        <div class="card-body">
+            <form class="form" th:action="@{/customer/save}" th:object="${customer}" method="post">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input th:field="*{name}" type="text" id="name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="name">R.U.N</label>
+                    <input th:field="*{run}" type="text" class="form-control" id="run">
+                </div>
+                <div class="form-group">
+                    <label for="birth">birth</label>
+                    <input th:field="*{birth}" type="date" class="form-control" id="birth">
+                </div>
+                <button type="submit" class="btn btn-primary">submit</button>
+                <a class="btn btn-secondary" th:href="@{/customer/list}">cancel</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
