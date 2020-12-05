@@ -1,5 +1,7 @@
 package com.jc.jpathymeleaf.model;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,6 +18,18 @@ public class Package {
     private String description;
 
     private String enable;
+
+    /*@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+    	name="travels",
+	joinColumns = @JoinColumn(name = "id", nullable = false),
+	inverseJoinColumns = @JoinColumn(name = "id", nullable =  false)
+    )*/
+    /*private List<Customer> customers;*/
+
+    public Package(){
+
+    }
 
     public int getId() {
         return id;

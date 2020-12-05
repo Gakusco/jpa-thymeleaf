@@ -1,6 +1,7 @@
 package com.jc.jpathymeleaf.service;
 
 import com.jc.jpathymeleaf.model.Customer;
+import com.jc.jpathymeleaf.model.Package;
 import com.jc.jpathymeleaf.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,4 +33,11 @@ public class CustomerServiceImpl implements CustomerService {
     public void deleteById(int id) {
         customerRepository.deleteById(id);
     }
+
+    /*@Override
+    public List<Package> findByPackageId(int id) {
+        return customerRepository.findByPackageById(id);
+    }*/
+
+
 }

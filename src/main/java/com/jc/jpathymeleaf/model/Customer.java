@@ -1,9 +1,10 @@
 package com.jc.jpathymeleaf.model;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -19,8 +20,11 @@ public class Customer {
 
     private Date birth;
 
-    public Customer() {
+/*    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "customers")*/
+    /*private List<Package> packages;*/
 
+    public Customer() {
+	/*packages = new ArrayList<>();*/
     }
 
     public int getId() {
@@ -54,4 +58,12 @@ public class Customer {
     public void setBirth(Date birth) {
         this.birth = birth;
     }
+	
+    /*public List<Package> getPackages(){
+    	return packages;
+    }
+
+    public void addPackage(Package pack){
+    	this.packages.add(pack);
+    }*/
 }

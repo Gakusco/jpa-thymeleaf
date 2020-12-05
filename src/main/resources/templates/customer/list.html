@@ -20,6 +20,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Run</th>
                     <th scope="col">birth</th>
+		    <th scope="col">package</th>
                 </tr>
                 </thead>
                 <tbody th:each="customer: ${customers}">
@@ -28,6 +29,7 @@
                     <td th:text="${customer.name}"></td>
                     <td th:text="${customer.run}"></td>
                     <td th:text="${customer.birth}"></td>
+		    <td><a class="alert alert-success" th:href="@{'/customer/package/' + ${customer.id}}"><i class="fas fa-archive"></i></a></td>
                 </tr>
                 </tbody>
             </table>
