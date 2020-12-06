@@ -50,15 +50,49 @@ public class CustomerController {
 
     @GetMapping("/package/{idCustomer}")
     public String addPackage(Model model, @PathVariable String idCustomer) {
-	/*List<Package> packagesCustomer = customerService.getById(Integer.parseInt(idCustomer)).getPackages();*/
-	List<Package> packages = packageService.findAll();
-	/*for ( Package packageCustomer : packagesCustomer ) {
-	    packages.removeIf(p -> p.getId() == packageCustomer.getId());
-	}*/
-        model.addAttribute("package", customerService.getById(Integer.parseInt(idCustomer)));
-    	model.addAttribute("packages", packages);	
-	    return "customer/add-package";
+        Customer customer = customerService.getById(Integer.parseInt(idCustomer));
+        refreshAddPackage(model, customer);
+        return "customer/add-package";
     }
+
+    @GetMapping("/package/add/{ids}")
+    public String savePackage(@PathVariable String ids, Model model) {
+        String idsArr[] = ids.split("-");
+        int idPackage = Integer.parseInt(idsArr[0]);
+        int idCustomer = Integer.parseInt(idsArr[1]);
+        Customer customer = customerService.getById(idCustomer);
+        Package pack = packageService.findById(idPackage);
+        customer.addPackage(pack);
+        customerService.save(customer);
+        refreshAddPackage(model, customer);
+        return "customer/add-package :: tabla-packages";
+    }
+
+    @GetMapping("/package/delete/{ids}")
+    public String deletePackage(Model model, @PathVariable String ids) {
+        String idsArr[] = ids.split("-");
+        int idPackage = Integer.parseInt(idsArr[0]);
+        int idCustomer = Integer.parseInt(idsArr[1]);
+        Customer customer = customerService.getById(idCustomer);
+        Package pack = packageService.findById(idPackage);
+        pack.removeCustomer(customer);
+        packageService.save(pack);
+        refreshAddPackage(model, customer);
+        return "customer/add-package :: tabla-packages";
+    }
+
+    private void refreshAddPackage(Model model, Customer customer) {
+        List<Package> packagesCustomer = customer.getPackages();
+        List<Package> packages = packageService.findAll();
+        for ( Package packageCustomer : packagesCustomer ) {
+            packages.removeIf(p -> p.getId() == packageCustomer.getId() || !p.isEnable());
+        }
+        packagesCustomer.removeIf(p -> !p.isEnable());
+        model.addAttribute("customer", customer);
+        model.addAttribute("packagesNew", packages);
+        model.addAttribute("packages", packagesCustomer);
+    }
+
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {

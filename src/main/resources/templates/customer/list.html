@@ -7,33 +7,12 @@
 <body>
 <div th:replace="shared/menu :: navbar"></div>
 
-    <div class="card m-4">
+    <div class="card m-4 bg-info text-white">
         <div class="card-header">
             <h2 class="float-lg-left">Customers</h2>
-            <a type="button" class="btn btn-outline-success float-lg-right" th:href="@{/customer/add}">Create</a>
+            <a type="button" class="btn btn-outline-light float-lg-right" th:href="@{/customer/add}">Create</a>
         </div>
-        <div class="card-body">
-            <table class="table">
-                <thead class="thead-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Run</th>
-                    <th scope="col">birth</th>
-		    <th scope="col">package</th>
-                </tr>
-                </thead>
-                <tbody th:each="customer: ${customers}">
-                <tr>
-                    <th scope="row" th:text="${customer.id}"></th>
-                    <td th:text="${customer.name}"></td>
-                    <td th:text="${customer.run}"></td>
-                    <td th:text="${customer.birth}"></td>
-		    <td><a class="alert alert-success" th:href="@{'/customer/package/' + ${customer.id}}"><i class="fas fa-archive"></i></a></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+        <div th:replace="shared/list-customer :: list-customer"></div>
     </div>
 </body>
 </html>

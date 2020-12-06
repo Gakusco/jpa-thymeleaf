@@ -7,10 +7,10 @@
     <body>
       <div th:replace="shared/menu :: navbar"></div>
       <div class="card m-4">
-          <div class="card-header">
+          <div class="card-header bg-info text-white">
               <h2>Create package</h2>
           </div>
-          <div class="card-body">
+          <div class="card-body bg-white">
               <form class="form" th:action="@{/package/save}" th:object="${package}" method="post">
                   <div class="form-group">
                       <label for="name">Name</label>
@@ -20,12 +20,8 @@
                       <label for="description">Description</label>
                       <input th:field="*{description}" type="text" class="form-control" id="description">
                   </div>
-                  <div class="form-group">
-                      <label for="enable">Enable</label>
-                      <input th:field="*{enable}" type="text" class="form-control" id="enable">
-                  </div>
-                  <button type="submit" class="btn btn-primary">submit</button>
-                  <a class="btn btn-secondary" th:href="@{/package/list}">cancel</a>
+                  <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> create</button>
+                  <a class="btn btn-secondary" th:href="@{/package/list}"><i class="fas fa-long-arrow-alt-left"></i></a>
               </form>
           </div>
       </div>

@@ -11,5 +11,5 @@ public interface CustomerService {
     Customer save(Customer customer);
     Customer getById(int idCustomer);
     void deleteById(int id);
-    /*List<Package> findByPackageId(int id);*/
+    List<Package> findByPackageId(int id);
 }

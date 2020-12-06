@@ -12,6 +12,7 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id_customer")
     private int id;
 
     private String name;
@@ -20,11 +21,11 @@ public class Customer {
 
     private Date birth;
 
-/*    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "customers")*/
-    /*private List<Package> packages;*/
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "customers")
+    private List<Package> packages;
 
     public Customer() {
-	/*packages = new ArrayList<>();*/
+	    packages = new ArrayList<>();
     }
 
     public int getId() {
@@ -59,11 +60,17 @@ public class Customer {
         this.birth = birth;
     }
 	
-    /*public List<Package> getPackages(){
+    public List<Package> getPackages(){
     	return packages;
     }
 
     public void addPackage(Package pack){
     	this.packages.add(pack);
-    }*/
+        pack.addCustomer(this);
+    }
+
+    public void removePackage(Package pack){
+        this.packages.remove(pack);
+        pack.removeCustomer(this);
+    }
 }

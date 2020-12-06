@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<script th:fragment="jquery" th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+    <div th:fragment="js-add-package">
+        <script th:inline="javascript" type="text/javascript">
+            /*<![CDATA[*/
+
+            function addPackage(customerId) {
+                const packageId = $('#select-package').val();
+                let url = '/customer/package/add/' + packageId + "-" + customerId;
+                $("#tabla-packages").load(url);
+            }
+
+            function deletePackage(packageId, customerId) {
+                let url = '/customer/package/delete/' + packageId + "-" + customerId;
+                $("#tabla-packages").load(url);
+            }
+
+            /*]]>*/
+        </script>
+    </div>
+</html>

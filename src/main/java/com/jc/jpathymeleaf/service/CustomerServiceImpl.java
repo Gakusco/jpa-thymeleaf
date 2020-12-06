@@ -34,10 +34,10 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.deleteById(id);
     }
 
-    /*@Override
+    @Override
     public List<Package> findByPackageId(int id) {
-        return customerRepository.findByPackageById(id);
-    }*/
+        return customerRepository.findByPackagesId(id);
+    }
 
 
 }

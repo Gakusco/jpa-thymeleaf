@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
-/*
-    List<Package> findByPackageById(int id);
-*/
+
+    List<Package> findByPackagesId(int id);
+
 }

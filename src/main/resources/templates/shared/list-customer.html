@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <div class="card-body bg-white" th:fragment="list-customer">
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col" class="text-center">#</th>
+                <th scope="col">Name</th>
+                <th scope="col" class="text-center">Run</th>
+                <th scope="col">birth</th>
+                <th scope="col" class="text-center">packages</th>
+            </tr>
+            </thead>
+            <tbody th:each="customer: ${customers}">
+            <tr>
+                <th scope="row" th:text="${customer.id}" class="text-center"></th>
+                <td th:text="${customer.name}"></td>
+                <td th:text="${customer.run}" class="text-center"></td>
+                <td th:text="${#dates.format(customer.birth, 'dd MMMM yyyy')}"></td>
+                <td class="text-center"><a class="alert alert-success" th:href="@{'/customer/package/' + ${customer.id}}" title="add packages"><i class="fas fa-plus"></i></a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

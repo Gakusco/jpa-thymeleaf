@@ -6,31 +6,12 @@
 </head>
 <body>
 <div th:replace="shared/menu :: navbar"></div>
-<div class="card m-4">
+<div class="card m-4 bg-info text-white">
     <div class="card-header">
         <h2 class="float-lg-left">Packages</h2>
-        <a type="button" class="btn btn-outline-success float-lg-right" th:href="@{/package/add}">Create</a>
+        <a type="button" class="btn btn-outline-light float-lg-right" th:href="@{/package/add}">Create</a>
     </div>
-    <div class="card-body">
-        <table class="table">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Enable</th>
-            </tr>
-            </thead>
-            <tbody th:each="package: ${packages}">
-            <tr>
-                <th scope="row" th:text="${package.id}"></th>
-                <td th:text="${package.name}"></td>
-                <td th:text="${package.description}"></td>
-                <td th:text="${package.enable}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+    <div th:replace="shared/list-package :: list-package"></div>
 </div>
 </body>
 </html>
