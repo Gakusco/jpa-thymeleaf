@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <script th:fragment="jquery" th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+
+    <div hidden="hidden" th:fragment="alerts">
+        <div id="success-alert" class="alert alert-success" th:if="${success}" th:text="${success}"></div>
+    </div>
+
+    <script th:fragment="js-alerts" type="text/javascript">
+
+        const success  = $("#success-alert")
+        if (success.text()) {
+            Swal.fire("¡Éxito!", success.text(), "success")
+        }
+    </script>
+
     <div th:fragment="js-add-package">
         <script th:inline="javascript" type="text/javascript">
             /*<![CDATA[*/
@@ -12,8 +25,23 @@
             }
 
             function deletePackage(packageId, customerId) {
-                let url = '/customer/package/delete/' + packageId + "-" + customerId;
-                $("#tabla-packages").load(url);
+                Swal.fire({
+                    title: 'está seguro?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'eliminar',
+                    cancelButtonText: 'cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let url = '/customer/package/delete/' + packageId + "-" + customerId;
+                        $("#tabla-packages").load(url);
+                        Swal.fire(
+                            'Eliminado!',
+                            'El paquete ha sido eliminado',
+                            'success'
+                        )
+                    }
+                })
             }
 
             /*]]>*/
@@ -31,8 +59,23 @@
             }
 
             function deleteCustomer(packageId, customerId) {
-                let url = '/package/customer/delete/' + packageId + "-" + customerId;
-                $("#tabla-customer").load(url);
+                Swal.fire({
+                    title: 'está seguro?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'eliminar',
+                    cancelButtonText: 'cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let url = '/package/customer/delete/' + packageId + "-" + customerId;
+                        $("#tabla-customer").load(url);
+                        Swal.fire(
+                            'Eliminado!',
+                            'El cliente ha sido eliminado',
+                            'success'
+                        )
+                    }
+                })
             }
 
             /*]]>*/

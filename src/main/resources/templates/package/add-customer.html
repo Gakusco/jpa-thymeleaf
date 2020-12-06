@@ -10,14 +10,14 @@
     <div th:fragment="tabla-customer" th:id="tabla-customer">
         <div class="card text-white bg-info m-4">
             <div class="card-header">
-                <h2>Add customer to <small th:text="${package.name}"></small></h2>
+                <h2>Añadir cliente al paquete <small th:text="${package.name}"></small></h2>
             </div>
             <div class="card-body bg-white text-dark">
                 <div class="form-group row">
-                    <label th:if="${#lists.size(customersNew)>0}" class="col-form-label text-right col-lg-3 col-sm-12">Customer</label>
+                    <label th:if="${#lists.size(customersNew)>0}" class="col-form-label text-right col-lg-3 col-sm-12">Cliente</label>
                     <div class="col-lg-4 col-md-9 col-sm-12">
                         <select th:if="${#lists.size(customersNew)>0}" th:id="select-customer" class="form-control">
-                            <option th:value= null>Select option</option>
+                            <option th:value= null>Seleccionar opción</option>
                             <option th:each="customer: ${customersNew}"
                                     th:value="${customer.id}"
                                     th:text="${customer.name}"

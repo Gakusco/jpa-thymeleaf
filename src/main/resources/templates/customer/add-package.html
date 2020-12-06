@@ -9,14 +9,14 @@
 	<div th:fragment="tabla-packages" th:id="tabla-packages">
 		<div class="card text-white bg-info m-4">
 			<div class="card-header">
-			<h2>Add package to <small th:text="${customer.name}"></small></h2>
+			<h2>Añadir paquete al cliente <small th:text="${customer.name}"></small></h2>
 			</div>
 			<div class="card-body bg-white text-dark">
 				<div class="form-group row">
-				<label th:if="${#lists.size(packagesNew)>0}" class="col-form-label text-right col-lg-3 col-sm-12">Package</label>
+				<label th:if="${#lists.size(packagesNew)>0}" class="col-form-label text-right col-lg-3 col-sm-12">Paquete</label>
 				<div class="col-lg-4 col-md-9 col-sm-12">
 					<select th:if="${#lists.size(packagesNew)>0}" th:id="select-package" class="form-control">
-					<option th:value= null>Select option</option>
+					<option th:value= null>Seleccionar opción</option>
 					<option th:each="package: ${packagesNew}"
 						th:value="${package.id}"
 						th:text="${package.name}"

@@ -9,11 +9,11 @@
             <thead class="thead-dark">
             <tr>
                 <th scope="col" class="text-center">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
-                <th th:if="${customer == null}" class="text-center" scope="col">Enable/Disable</th>
-                <th scope="col" th:if="${customer}" class="text-center">Delete</th>
-                <th scope="col" th:if="${customer == null}" class="text-center">Customers</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripción</th>
+                <th th:if="${customer == null}" class="text-center" scope="col">Habilitar/Deshabilitar</th>
+                <th scope="col" th:if="${customer}" class="text-center">Eliminar</th>
+                <th scope="col" th:if="${customer == null}" class="text-center">Clientes</th>
             </tr>
             </thead>
             <tbody th:each="package: ${packages}">

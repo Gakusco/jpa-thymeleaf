@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -42,12 +43,13 @@ public class CustomerController {
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute Customer customer, BindingResult result, Model model) {
+    public String save(@ModelAttribute Customer customer, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         // if (result.hasErrors()){
         //    return "customer/form";
         //}
         customerService.save(customer);
         model.addAttribute("menuActive", "customers");
+        redirectAttributes.addFlashAttribute("success", "El cliente ha sido registrado");
         return "redirect:/customer/list";
     }
 

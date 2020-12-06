@@ -9,11 +9,11 @@
             <thead class="thead-dark">
             <tr>
                 <th scope="col" class="text-center">#</th>
-                <th scope="col">Name</th>
+                <th scope="col">Nombre</th>
                 <th scope="col" class="text-center">Run</th>
-                <th scope="col">birth</th>
-                <th th:if="${package == null}" scope="col" class="text-center">packages</th>
-                <th scope="col" th:if="${package}" class="text-center">Delete</th>
+                <th scope="col">Fecha nacimiento</th>
+                <th th:if="${package == null}" scope="col" class="text-center">Paquetes</th>
+                <th scope="col" th:if="${package}" class="text-center">Eliminar</th>
             </tr>
             </thead>
             <tbody th:each="customer: ${customers}">
