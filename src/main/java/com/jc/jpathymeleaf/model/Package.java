@@ -1,5 +1,6 @@
 package com.jc.jpathymeleaf.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -28,7 +29,7 @@ public class Package {
     private List<Customer> customers;
 
     public Package(){
-
+        this.customers = new ArrayList<>();
     }
 
     public int getId() {

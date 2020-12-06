@@ -19,4 +19,41 @@
             /*]]>*/
         </script>
     </div>
+
+    <div th:fragment="js-add-customer">
+        <script th:inline="javascript" type="text/javascript">
+            /*<![CDATA[*/
+
+            function addCustomer(packageId) {
+                const customerId = $('#select-customer').val();
+                let url = '/package/customer/add/' + packageId + "-" + customerId;
+                $("#tabla-customer").load(url);
+            }
+
+            function deleteCustomer(packageId, customerId) {
+                let url = '/package/customer/delete/' + packageId + "-" + customerId;
+                $("#tabla-customer").load(url);
+            }
+
+            /*]]>*/
+        </script>
+    </div>
+
+    <div th:fragment="js-package">
+        <script th:inline="javascript" type="text/javascript">
+            /*<![CDATA[*/
+
+            function enable(packageId) {
+                let url = '/package/enable/' + packageId;
+                $("#list-pack").load(url);
+            }
+
+            function disable(packageId) {
+                let url = '/package/disable/' + packageId;
+                $("#list-pack").load(url);
+            }
+
+            /*]]>*/
+        </script>
+    </div>
 </html>

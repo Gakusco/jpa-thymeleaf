@@ -30,12 +30,14 @@ public class CustomerController {
     @GetMapping("/list")
     public String listar(Model model){
         model.addAttribute("customers", customerService.findAll());
+        model.addAttribute("menuActive", "customers");
         return "customer/list";
     }
 
     @GetMapping("/add")
     public String add(Model model){
         model.addAttribute("customer", new Customer());
+        model.addAttribute("menuActive", "customers");
         return "customer/form";
     }
 
@@ -45,6 +47,7 @@ public class CustomerController {
         //    return "customer/form";
         //}
         customerService.save(customer);
+        model.addAttribute("menuActive", "customers");
         return "redirect:/customer/list";
     }
 
@@ -57,20 +60,20 @@ public class CustomerController {
 
     @GetMapping("/package/add/{ids}")
     public String savePackage(@PathVariable String ids, Model model) {
-        String idsArr[] = ids.split("-");
+        String[] idsArr = ids.split("-");
         int idPackage = Integer.parseInt(idsArr[0]);
         int idCustomer = Integer.parseInt(idsArr[1]);
         Customer customer = customerService.getById(idCustomer);
         Package pack = packageService.findById(idPackage);
-        customer.addPackage(pack);
-        customerService.save(customer);
+        pack.addCustomer(customer);
+        packageService.save(pack);
         refreshAddPackage(model, customer);
         return "customer/add-package :: tabla-packages";
     }
 
     @GetMapping("/package/delete/{ids}")
     public String deletePackage(Model model, @PathVariable String ids) {
-        String idsArr[] = ids.split("-");
+        String[] idsArr = ids.split("-");
         int idPackage = Integer.parseInt(idsArr[0]);
         int idCustomer = Integer.parseInt(idsArr[1]);
         Customer customer = customerService.getById(idCustomer);
@@ -91,6 +94,7 @@ public class CustomerController {
         model.addAttribute("customer", customer);
         model.addAttribute("packagesNew", packages);
         model.addAttribute("packages", packagesCustomer);
+        model.addAttribute("menuActive", "customers");
     }
 
 

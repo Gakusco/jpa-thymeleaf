@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
 </head>
 <body>
-    <div class="card-body bg-white" th:fragment="list-package">
+    <div class="card-body bg-white" th:fragment="list-package" th:id="list-package">
         <table class="table" th:if="${#lists.size(packages)>0}">
             <thead class="thead-dark">
             <tr>
                 <th scope="col" class="text-center">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
-                <th th:if="${customer == null}" class="text-center" scope="col">Enable</th>
+                <th th:if="${customer == null}" class="text-center" scope="col">Enable/Disable</th>
                 <th scope="col" th:if="${customer}" class="text-center">Delete</th>
                 <th scope="col" th:if="${customer == null}" class="text-center">Customers</th>
             </tr>
@@ -22,11 +22,26 @@
                 <td th:text="${package.name}"></td>
                 <td th:text="${package.description}"></td>
                 <td th:if="${customer == null}" class="text-center">
-                    <i th:if="${package.enable == true}" class="fas fa-check text-success"></i>
-                    <i th:if="${package.enable == false}" class="fas fa-times text-danger"></i>
+                    <button th:if="${package.enable == true}" class="btn btn-outline-success" title="to disable" th:onclick="'disable('+${package.id}+')'">
+                        <i class="fas fa-check"></i>
+                    </button>
+                    <button th:if="${package.enable == false}" class="btn btn-outline-danger" title="enable" th:onclick="'enable('+${package.id}+')'">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </td>
-                <td th:if="${customer}" class="text-center"><a class="alert alert-danger" th:onclick="'deletePackage('+${package.id} + ',' + ${customer.id}+')'" title="delete package"><i class="far fa-trash-alt"></i></a></td>
-                <td th:if="${customer == null}" class="text-center"><a class="alert alert-success" th:href="@{'/package/customer/' + ${package.id}}" title="add customers"><i class="fas fa-plus"></i></a></td>
+                <td th:if="${customer}" class="text-center">
+                    <button class="btn btn-outline-danger" th:onclick="'deletePackage('+${package.id} + ',' + ${customer.id}+')'" title="delete package">
+                        <i class="far fa-trash-alt"></i>
+                    </button>
+                </td>
+                <td th:if="${customer == null}" class="text-center">
+                    <a th:if="${package.enable}" class="btn btn-outline-success" th:href="@{'/package/customer/' + ${package.id}}" title="add customers">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                    <button th:if="${not package.enable}" class="btn btn-outline-dark disabled">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </td>
             </tr>
             </tbody>
         </table>

@@ -11,7 +11,11 @@
         <h2 class="float-lg-left">Packages</h2>
         <a type="button" class="btn btn-outline-light float-lg-right" th:href="@{/package/add}">Create</a>
     </div>
-    <div th:replace="shared/list-package :: list-package"></div>
+    <div th:fragment="list-pack" th:id="list-pack">
+        <div th:replace="shared/list-package :: list-package"></div>
+    </div>
 </div>
+<div th:replace="shared/imports :: jquery"></div>
+<div th:replace="shared/imports :: js-package"></div>
 </body>
 </html>

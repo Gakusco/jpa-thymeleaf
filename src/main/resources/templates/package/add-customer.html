@@ -6,5 +6,40 @@
 </head>
 <body>
     <div th:replace="shared/menu :: navbar"></div>
+
+    <div th:fragment="tabla-customer" th:id="tabla-customer">
+        <div class="card text-white bg-info m-4">
+            <div class="card-header">
+                <h2>Add customer to <small th:text="${package.name}"></small></h2>
+            </div>
+            <div class="card-body bg-white text-dark">
+                <div class="form-group row">
+                    <label th:if="${#lists.size(customersNew)>0}" class="col-form-label text-right col-lg-3 col-sm-12">Customer</label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <select th:if="${#lists.size(customersNew)>0}" th:id="select-customer" class="form-control">
+                            <option th:value= null>Select option</option>
+                            <option th:each="customer: ${customersNew}"
+                                    th:value="${customer.id}"
+                                    th:text="${customer.name}"
+                            ></option>
+                        </select>
+
+                    </div>
+                    <a th:if="${#lists.size(customersNew)>0}" class="btn btn-outline-primary mr-1" title="add customer" th:onclick="'addCustomer('+ ${package.id} +')'">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                    <a class="btn btn-outline-secondary" th:href="@{/package/list}" title="return">
+                        <i class="fas fa-long-arrow-alt-left"></i>
+                    </a>
+                </div>
+
+                <div class="card-footer bg-white">
+                    <div th:replace="shared/list-customer :: list-customer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="shared/imports :: jquery"></div>
+    <div th:replace="shared/imports :: js-add-customer"></div>
 </body>
 </html>
