@@ -13,16 +13,38 @@
         <div class="card-body bg-white text-dark">
             <form class="form" th:action="@{/customer/save}" th:object="${customer}" method="post">
                 <div class="form-group">
-                    <label for="name">Nombre</label>
-                    <input th:field="*{name}" type="text" id="name" class="form-control">
+                    <label for="name" th:class="${#fields.hasErrors('name') ? 'text-danger' : ''}">Nombre</label>
+                    <input th:field="*{name}"
+                           type="text" id="name"
+                           th:class="${not #strings.isEmpty(customer.name) && not #fields.hasErrors('name') ? 'form-control is-valid' : 'form-control'}"
+                           th:errorClass="is-invalid">
+                    <small th:if="${#fields.hasErrors('name')}"
+                           th:errors="*{name}"
+                           class="text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label for="name">R.U.N</label>
-                    <input th:field="*{run}" type="text" class="form-control" id="run">
+                    <label for="name" th:class="${#fields.hasErrors('run') ? 'text-danger' : ''}">R.U.N</label>
+                    <input th:field="*{run}"
+                           type="text"
+                           id="run"
+                           th:class="${not #strings.isEmpty(customer.run) && not #fields.hasErrors('run') ? 'form-control is-valid' : 'form-control'}"
+                           th:errorClass="is-invalid">
+                    <small th:if="${#fields.hasErrors('run')}"
+                           th:errors="*{run}"
+                           class="text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label for="birth">Fecha nacimiento</label>
-                    <input th:field="*{birth}" type="date" class="form-control" id="birth">
+                    <label for="birth" th:class="${#fields.hasErrors('birth') ? 'text-danger' : ''}">Fecha nacimiento</label>
+                    <input th:field="*{birth}"
+                           type="date"
+                           id="birth"
+                           min="1910-01-01"
+                           max="2010-01-01"
+                           th:class="${not #strings.isEmpty(customer.birth) && not #fields.hasErrors('birth') ? 'form-control is-valid' : 'form-control'}"
+                           th:errorClass="is-invalid">
+                    <small th:if="${#fields.hasErrors('birth')}"
+                            th:errors="*{birth}"
+                            class="text-danger"></small>
                 </div>
                 <button type="submit" class="btn btn-outline-primary"><i class="fas fa-plus"></i> registrar</button>
                 <a class="btn btn-outline-secondary" th:href="@{/customer/list}"><i class="fas fa-long-arrow-alt-left"></i></a>

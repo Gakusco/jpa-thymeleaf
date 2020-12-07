@@ -1,5 +1,6 @@
 package com.jc.jpathymeleaf.controller;
 
+import com.jc.jpathymeleaf.Validations.CustomerValidation;
 import com.jc.jpathymeleaf.model.Customer;
 import com.jc.jpathymeleaf.model.Package;
 import com.jc.jpathymeleaf.service.CustomerService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -27,6 +29,9 @@ public class CustomerController {
 
     @Autowired
     PackageService packageService;
+
+    @Autowired
+    CustomerValidation customerValidation;
 
     @GetMapping("/list")
     public String listar(Model model){
@@ -43,10 +48,11 @@ public class CustomerController {
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute Customer customer, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        // if (result.hasErrors()){
-        //    return "customer/form";
-        //}
+    public String save(@Valid @ModelAttribute Customer customer, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+        customerValidation.validate(customer, result);
+         if (result.hasErrors()){
+            return "customer/form";
+        }
         customerService.save(customer);
         model.addAttribute("menuActive", "customers");
         redirectAttributes.addFlashAttribute("success", "El cliente ha sido registrado");

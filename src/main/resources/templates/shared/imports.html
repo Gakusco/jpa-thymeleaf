@@ -19,9 +19,15 @@
             /*<![CDATA[*/
 
             function addPackage(customerId) {
-                const packageId = $('#select-package').val();
-                let url = '/customer/package/add/' + packageId + "-" + customerId;
-                $("#tabla-packages").load(url);
+                let package = $('#select-package')
+                const packageId = package.val();
+                if(packageId) {
+                    let url = '/customer/package/add/' + packageId + "-" + customerId;
+                    $("#tabla-packages").load(url);    
+                } else {
+                    package.addClass("is-invalid")
+                }
+                
             }
 
             function deletePackage(packageId, customerId) {
@@ -37,7 +43,7 @@
                         $("#tabla-packages").load(url);
                         Swal.fire(
                             'Eliminado!',
-                            'El paquete ha sido eliminado',
+                            'El paquete ha sido retirado del cliente',
                             'success'
                         )
                     }
@@ -53,9 +59,15 @@
             /*<![CDATA[*/
 
             function addCustomer(packageId) {
-                const customerId = $('#select-customer').val();
-                let url = '/package/customer/add/' + packageId + "-" + customerId;
-                $("#tabla-customer").load(url);
+                let customer = $('#select-customer');
+                const customerId = customer.val();
+                if (customerId) {
+                    let url = '/package/customer/add/' + packageId + "-" + customerId;
+                    $("#tabla-customer").load(url);
+                } else {
+                    customer.addClass("is-invalid")
+                }
+
             }
 
             function deleteCustomer(packageId, customerId) {
@@ -71,7 +83,7 @@
                         $("#tabla-customer").load(url);
                         Swal.fire(
                             'Eliminado!',
-                            'El cliente ha sido eliminado',
+                            'El cliente ha sido retirado del paquete',
                             'success'
                         )
                     }

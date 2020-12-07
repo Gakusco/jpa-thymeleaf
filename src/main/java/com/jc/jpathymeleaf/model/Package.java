@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="packages")
@@ -14,8 +16,10 @@ public class Package {
     @Column(name="id_package")
     private int id;
 
+    @Size(min =2, max=20, message="El tamaño del nombre debe estar entre 2 y 20")
     private String name;
 
+    @NotEmpty(message="No debe estar vacio")
     private String description;
 
     private boolean enable;
