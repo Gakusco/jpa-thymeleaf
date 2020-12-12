@@ -16,6 +16,7 @@
                     <label for="name" th:class="${#fields.hasErrors('name') ? 'text-danger' : ''}">Nombre</label>
                     <input th:field="*{name}"
                            type="text" id="name"
+                           placeholder="Juan Carlos Ortiz"
                            th:class="${not #strings.isEmpty(customer.name) && not #fields.hasErrors('name') ? 'form-control is-valid' : 'form-control'}"
                            th:errorClass="is-invalid">
                     <small th:if="${#fields.hasErrors('name')}"
@@ -25,6 +26,7 @@
                 <div class="form-group">
                     <label for="name" th:class="${#fields.hasErrors('run') ? 'text-danger' : ''}">R.U.N</label>
                     <input th:field="*{run}"
+                           placeholder="19414979-4"
                            type="text"
                            id="run"
                            th:class="${not #strings.isEmpty(customer.run) && not #fields.hasErrors('run') ? 'form-control is-valid' : 'form-control'}"

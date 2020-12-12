@@ -7,6 +7,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+import java.util.List;
+
 @Component
 public class CustomerValidation implements Validator {
     @Override
@@ -21,97 +23,59 @@ public class CustomerValidation implements Validator {
         ValidationUtils.rejectIfEmpty(errors, "run", null, "Debe ingresar su run");
 
         if(!validateRun(customer.getRun())){
-            errors.rejectValue("run", null, "El run no tiene un formato correcto, Ej: 19.414.979-4");
+            errors.rejectValue("run", null, "El run no es valido");
         }
     }
 
     private boolean validateRun(String run) {
-        return true;
-//        return validarNumerosYSimbolos(run) &&  validarFormatoRut(run);
-    }
-
-    public boolean validarNumerosYSimbolos(String rut) {
-        if (rut.length()>12 || rut.length()<10 ) {
+        if (run.contains(".")){
             return false;
-        }
-        int cantidadPuntos = 0;
-        int cantidadGuion = 0;
-        char arreglo[] = rut.toCharArray();
-        int ascii;
-        for (int i = 0;i<rut.length(); i++) {
-            ascii = (int)arreglo[i];
-            if ( esNumeroASCII(ascii) || ascii == 107 || ascii == 46 || ascii == 45) {
-                // Si el char es un numero, un '.', un '-' o una 'k', entonces es correcto
-                // 48 = '0', 57 = '9', 107 = 'k', 46 = '.', 45 = '-'
-                if ( ascii == 46 ) {
-                    cantidadPuntos++;
-                }
-                if ( ascii == 45 ) {
-                    cantidadGuion++;
-                }
-            } else {
+        } else {
+            if (!run.contains("-")){
                 return false;
             }
         }
-        if ( cantidadPuntos != 2 || cantidadGuion != 1) {
-            return false;
-        }
-        return true;
-    }
-
-    public boolean validarFormatoRut(String rut) {
-        //En este punto el rut ya debe tener dos '.' y un '-' y tener solo numeros y una k en el digito verificador
-        String[] arrRut = rut.split("\\.");
-        char[] numero = arrRut[0].toCharArray();
-        if ( numero.length > 2 || numero.length < 1) {
-            return false;
-        } else {
-            if (!soloNumero(numero)) return false;
-        }
-        numero = arrRut[1].toCharArray();
-        if ( numero.length != 3) {
-            return false;
-        } else {
-            if (!soloNumero(numero)) return false;
-        }
-        String[] numYDigito = arrRut[2].split("-");
-        if (numYDigito.length != 2 ) {
-            return false;
-        } else {
-            numero = numYDigito[0].toCharArray();
-            if ( numero.length != 3) {
-                return false;
-            } else {
-                if (!soloNumero(numero)) return false;
-            }
-            numero = numYDigito[1].toCharArray();
-            if ( numero.length > 1 ) {
-                return false;
-            } else {
-                if (soloNumero(numero) || numero[0] == 'k') {
-                    return true;
+        String[] numberDigit = run.split("-");
+        if (numberDigit.length == 2){
+            if (numberDigit[0].length() >= 7 &&
+                    numberDigit[0].length() <= 8 &&
+                    numberDigit[1].length() == 1) {
+                if (!onlyNumber(numberDigit[0])) return false;
+                int suma = 0;
+                int mult = 2;
+                int result;
+                for (int i = numberDigit[0].length() - 1; i>=0; i--) {
+                    result = Integer.parseInt(String.valueOf(numberDigit[0].charAt(i))) * mult;
+                    suma = suma + result;
+                    mult = mult + 1;
+                    if (mult == 8) mult = 2;
                 }
+                int moduloOnce = 11 - (suma % 11);
+                char dv;
+                if (moduloOnce == 10) {
+                    dv = 'k';
+                } else {
+                    if (moduloOnce == 11) {
+                        dv = '0';
+                    } else {
+                        dv = Character.forDigit(moduloOnce, 10);
+                    }
+                }
+                char dvInput = Character.toLowerCase(numberDigit[1].charAt(0));
+                if (dv == dvInput) return true;
+            } else {
+                return false;
             }
         }
         return false;
     }
 
-    public boolean esNumeroASCII(int ascii) {
-        if ( (ascii >= 48 && ascii<=57) ) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean soloNumero(char numero[]) {
-        int ascii;
-        for (int i = 0; i<numero.length; i++ ) {
-            ascii = (int) numero[i];
-            if ( !esNumeroASCII(ascii) ) {
-                return false;
-            }
+    private boolean onlyNumber(String s) {
+        for (int i = 0; i<s.length();i++) {
+            if (s.charAt(i) < '0' || s.charAt(i) > '9') return false;
         }
         return true;
     }
+
+
 }
