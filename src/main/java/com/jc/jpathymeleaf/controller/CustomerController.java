@@ -3,8 +3,10 @@ package com.jc.jpathymeleaf.controller;
 import com.jc.jpathymeleaf.Validations.CustomerValidation;
 import com.jc.jpathymeleaf.model.Customer;
 import com.jc.jpathymeleaf.model.Package;
+import com.jc.jpathymeleaf.model.User;
 import com.jc.jpathymeleaf.service.CustomerService;
 import com.jc.jpathymeleaf.service.PackageService;
+import com.jc.jpathymeleaf.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -32,6 +34,9 @@ public class CustomerController {
 
     @Autowired
     CustomerValidation customerValidation;
+
+//    @Autowired
+//    UserService userService;
 
     @GetMapping("/list")
     public String listar(Model model){
@@ -96,8 +101,9 @@ public class CustomerController {
         List<Package> packagesCustomer = customer.getPackages();
         List<Package> packages = packageService.findAll();
         for ( Package packageCustomer : packagesCustomer ) {
-            packages.removeIf(p -> p.getId() == packageCustomer.getId() || !p.isEnable());
+            packages.removeIf(p -> p.getId() == packageCustomer.getId());
         }
+        packages.removeIf(p -> !p.isEnable());
         packagesCustomer.removeIf(p -> !p.isEnable());
         model.addAttribute("customer", customer);
         model.addAttribute("packagesNew", packages);

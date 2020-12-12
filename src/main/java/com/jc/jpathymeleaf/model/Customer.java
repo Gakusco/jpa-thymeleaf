@@ -20,7 +20,7 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id_customer")
+    @Column(name="id")
     private int id;
 
     @Size(min = 2, max =20, message= "El tamaño del nombre debe estar entre 2 y 20")
@@ -34,6 +34,10 @@ public class Customer {
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "customers")
     private List<Package> packages;
+    
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name="id_user")
+//    private User user;
 
     public Customer() {
 	    packages = new ArrayList<>();
@@ -84,4 +88,16 @@ public class Customer {
         this.packages.remove(pack);
         pack.removeCustomer(this);
     }
+
+    public void setPackages(List<Package> packages) {
+        this.packages = packages;
+    }
+
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 }

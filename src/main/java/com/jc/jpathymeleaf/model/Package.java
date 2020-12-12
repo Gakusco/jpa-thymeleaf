@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -13,7 +14,7 @@ public class Package {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id_package")
+    @Column(name="id")
     private int id;
 
     @Size(min =2, max=20, message="El tamaño del nombre debe estar entre 2 y 20")
@@ -22,7 +23,14 @@ public class Package {
     @NotEmpty(message="No debe estar vacio")
     private String description;
 
+//    private String image;
+
     private boolean enable;
+
+//    @NotNull
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name="id_city")
+//    private City city;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
@@ -83,4 +91,20 @@ public class Package {
     public void removeCustomer(Customer customer) {
         this.customers.remove(customer);
     }
+
+//    public String getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(String image) {
+//        this.image = image;
+//    }
+//
+//    public City getCity() {
+//        return city;
+//    }
+//
+//    public void setCity(City city) {
+//        this.city = city;
+//    }
 }
