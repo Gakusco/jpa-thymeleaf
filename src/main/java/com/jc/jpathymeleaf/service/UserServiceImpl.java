@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -36,12 +37,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User findById(int id) {
-        return userRepository.getOne(id);
+    public Optional<User> findById(int id) {
+        return userRepository.findById(id);
     }
 
     @Override
-    public void deletById(int id) {
+    public void deleteById(int id) {
         userRepository.deleteById(id);
     }
 

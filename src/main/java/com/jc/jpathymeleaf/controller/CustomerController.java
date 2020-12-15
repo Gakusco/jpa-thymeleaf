@@ -20,6 +20,7 @@ import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/customer")
@@ -71,8 +72,8 @@ public class CustomerController {
 
     @GetMapping("/package/{idCustomer}")
     public String addPackage(Model model, @PathVariable String idCustomer) {
-        Customer customer = customerService.getById(Integer.parseInt(idCustomer));
-        refreshAddPackage(model, customer);
+        Optional<Customer> customerOptional = customerService.findById(Integer.parseInt(idCustomer));
+        customerOptional.ifPresent(customer -> refreshAddPackage(model, customer));
         return "customer/add-package";
     }
 
@@ -81,11 +82,13 @@ public class CustomerController {
         String[] idsArr = ids.split("-");
         int idPackage = Integer.parseInt(idsArr[0]);
         int idCustomer = Integer.parseInt(idsArr[1]);
-        Customer customer = customerService.getById(idCustomer);
-        Package pack = packageService.findById(idPackage);
-        pack.addCustomer(customer);
-        packageService.save(pack);
-        refreshAddPackage(model, customer);
+        Optional<Customer> customerOptional = customerService.findById(idCustomer);
+        Optional<Package> packOptional = packageService.findById(idPackage);
+        if (customerOptional.isPresent() && packOptional.isPresent()){
+            packOptional.get().addCustomer(customerOptional.get());
+            packageService.save(packOptional.get());
+            refreshAddPackage(model, customerOptional.get());
+        }
         return "customer/add-package :: tabla-packages";
     }
 
@@ -94,11 +97,13 @@ public class CustomerController {
         String[] idsArr = ids.split("-");
         int idPackage = Integer.parseInt(idsArr[0]);
         int idCustomer = Integer.parseInt(idsArr[1]);
-        Customer customer = customerService.getById(idCustomer);
-        Package pack = packageService.findById(idPackage);
-        pack.removeCustomer(customer);
-        packageService.save(pack);
-        refreshAddPackage(model, customer);
+        Optional<Customer> customerOptional = customerService.findById(idCustomer);
+        Optional<Package> packOptional = packageService.findById(idPackage);
+        if (customerOptional.isPresent() && packOptional.isPresent()){
+            packOptional.get().removeCustomer(customerOptional.get());
+            packageService.save(packOptional.get());
+            refreshAddPackage(model, customerOptional.get());
+        }
         return "customer/add-package :: tabla-packages";
     }
 

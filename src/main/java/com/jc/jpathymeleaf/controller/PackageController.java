@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/package")
@@ -59,8 +60,8 @@ public class PackageController {
 
     @GetMapping("/customer/{idPackage}")
     public String addCustomer(Model model, @PathVariable String idPackage){
-        Package pack = packageService.findById(Integer.parseInt(idPackage));
-        refreshAddCustomer(model, pack);
+        Optional<Package> packOptional = packageService.findById(Integer.parseInt(idPackage));
+        packOptional.ifPresent(pack -> refreshAddCustomer(model, pack));
         return "package/add-customer";
     }
 
@@ -69,11 +70,13 @@ public class PackageController {
         String[] idsArr = ids.split("-");
         int idPackage = Integer.parseInt(idsArr[0]);
         int idCustomer = Integer.parseInt(idsArr[1]);
-        Customer customer = customerService.getById(idCustomer);
-        Package pack = packageService.findById(idPackage);
-        pack.addCustomer(customer);
-        packageService.save(pack);
-        refreshAddCustomer(model, pack);
+        Optional<Customer> customerOptional = customerService.findById(idCustomer);
+        Optional<Package> packOptional = packageService.findById(idPackage);
+        if (customerOptional.isPresent() && packOptional.isPresent()){
+            packOptional.get().addCustomer(customerOptional.get());
+            packageService.save(packOptional.get());
+            refreshAddCustomer(model, packOptional.get());
+        }
         return "package/add-customer :: tabla-customer";
     }
 
@@ -82,11 +85,13 @@ public class PackageController {
         String[] idsArr = ids.split("-");
         int idPackage = Integer.parseInt(idsArr[0]);
         int idCustomer = Integer.parseInt(idsArr[1]);
-        Customer customer = customerService.getById(idCustomer);
-        Package pack = packageService.findById(idPackage);
-        pack.removeCustomer(customer);
-        packageService.save(pack);
-        refreshAddCustomer(model, pack);
+        Optional<Customer> customerOptional = customerService.findById(idCustomer);
+        Optional<Package> packOptional = packageService.findById(idPackage);
+        if (customerOptional.isPresent() && packOptional.isPresent()){
+            packOptional.get().removeCustomer(customerOptional.get());
+            packageService.save(packOptional.get());
+            refreshAddCustomer(model, packOptional.get());
+        }
         return "package/add-customer :: tabla-customer";
     }
 
@@ -105,11 +110,13 @@ public class PackageController {
     }
 
     private void isEnabled(Boolean change, Model model, String idPackage) {
-        Package pack = packageService.findById(Integer.parseInt(idPackage));
-        pack.setEnable(change);
-        packageService.save(pack);
-        model.addAttribute("menuActive", "packages");
-        model.addAttribute("packages", packageService.findAll());
+        Optional<Package> packOptional = packageService.findById(Integer.parseInt(idPackage));
+        packOptional.ifPresent(pack -> {
+            pack.setEnable(change);
+            packageService.save(pack);
+            model.addAttribute("menuActive", "packages");
+            model.addAttribute("packages", packageService.findAll());
+        });
     }
 
     private void refreshAddCustomer(Model model, Package pack) {

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PackageServiceImpl implements PackageService{
@@ -19,8 +20,8 @@ public class PackageServiceImpl implements PackageService{
     }
 
     @Override
-    public Package findById(int id) {
-        return packageRepository.getOne(id);
+    public Optional<Package> findById(int id) {
+        return packageRepository.findById(id);
     }
 
     @Override
@@ -29,7 +30,7 @@ public class PackageServiceImpl implements PackageService{
     }
 
     @Override
-    public void delete(int id) {
+    public void deleteById(int id) {
         packageRepository.deleteById(id);
     }
 }
