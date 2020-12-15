@@ -1,14 +1,17 @@
 package com.jc.jpathymeleaf.controller;
 
 import com.jc.jpathymeleaf.Validations.CustomerValidation;
+import com.jc.jpathymeleaf.model.Authority;
 import com.jc.jpathymeleaf.model.Customer;
 import com.jc.jpathymeleaf.model.Package;
 import com.jc.jpathymeleaf.model.User;
+import com.jc.jpathymeleaf.service.AuthorityService;
 import com.jc.jpathymeleaf.service.CustomerService;
 import com.jc.jpathymeleaf.service.PackageService;
 import com.jc.jpathymeleaf.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -34,10 +38,16 @@ public class CustomerController {
     PackageService packageService;
 
     @Autowired
-    CustomerValidation customerValidation;
+    UserService userService;
 
     @Autowired
-    UserService userService;
+    AuthorityService authorityService;
+
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    CustomerValidation customerValidation;
 
     @GetMapping("/list")
     public String listar(Model model){
@@ -59,11 +69,12 @@ public class CustomerController {
          if (result.hasErrors()){
             return "customer/form";
         }
-        User user = new User();
-         user.setUsername("Mariano");
-         user.setPassword("Estelano");
-         User newUser = userService.save(user);
-         customer.setUser(newUser);
+        customer.getUser().setPassword(bCryptPasswordEncoder.encode(customer.getUser().getPassword()));
+        User user = userService.save(customer.getUser());
+        customer.setUser(user);
+        Authority authority = new Authority(1, "ROLE_ADMINISTRADOR");
+        customer.getUser().setAuthorities(new ArrayList<>());
+        customer.getUser().getAuthorities().add(authority);
         customerService.save(customer);
         model.addAttribute("menuActive", "customers");
         redirectAttributes.addFlashAttribute("success", "El cliente ha sido registrado");

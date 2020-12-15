@@ -14,6 +14,8 @@ public class Staff {
 
     private String run;
 
+    private String birth;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_user")
     private User user;
@@ -52,5 +54,11 @@ public class Staff {
         this.user = user;
     }
 
+    public String getBirth() {
+        return birth;
+    }
 
+    public void setBirth(String birth) {
+        this.birth = birth;
+    }
 }

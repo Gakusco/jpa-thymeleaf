@@ -48,6 +48,30 @@
                             th:errors="*{birth}"
                             class="text-danger"></small>
                 </div>
+                <div class="form-group">
+                    <label for="username" th:class="${#fields.hasErrors('user.username') ? 'text-danger' : ''}">Usuario</label>
+                    <input th:field="*{user.username}"
+                           type="text"
+                           id="username"
+                           placeholder="Gakusco"
+                           th:class="${not #strings.isEmpty(customer.user.username) && not #fields.hasErrors('user.username') ? 'form-control is-valid' : 'form-control'}"
+                           th:errorClass="is-invalid">
+                    <small th:if="${#fields.hasErrors('user.username')}"
+                           th:errors="*{user.username}"
+                           class="text-danger"></small>
+                </div>
+                <div class="form-group">
+                    <label for="username" th:class="${#fields.hasErrors('user.password') ? 'text-danger' : ''}">Contraseña</label>
+                    <input th:field="*{user.password}"
+                           type="password"
+                           id="password"
+                           placeholder="******"
+                           th:class="${not #strings.isEmpty(customer.user.password) && not #fields.hasErrors('user.password') ? 'form-control is-valid' : 'form-control'}"
+                           th:errorClass="is-invalid">
+                    <small th:if="${#fields.hasErrors('user.password')}"
+                           th:errors="*{user.password}"
+                           class="text-danger"></small>
+                </div>
                 <button type="submit" class="btn btn-outline-primary"><i class="fas fa-plus"></i> registrar</button>
                 <a class="btn btn-outline-secondary" th:href="@{/customer/list}"><i class="fas fa-long-arrow-alt-left"></i></a>
             </form>

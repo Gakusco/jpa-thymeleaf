@@ -18,6 +18,19 @@ public class Authority {
     @JoinColumn(name = "id_user")
     private User user;
 
+    public Authority(){
+
+    }
+
+    public Authority(String authority) {
+        this.authority = authority;
+    }
+
+    public Authority(int id, String authority) {
+        this.id = id;
+        this.authority = authority;
+    }
+
     public int getId() {
         return id;
     }
