@@ -35,9 +35,9 @@ public class Customer {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "customers")
     private List<Package> packages;
     
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name="id_user")
-//    private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="id_user")
+    private User user;
 
     public Customer() {
 	    packages = new ArrayList<>();
@@ -93,11 +93,11 @@ public class Customer {
         this.packages = packages;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

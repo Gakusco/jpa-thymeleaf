@@ -25,8 +25,8 @@ public class PackageController {
     @Autowired
     CustomerService customerService;
 
-//    @Autowired
-//    CityService cityService;
+    @Autowired
+    CityService cityService;
 
     @GetMapping("/list")
     public String list(Model model){
@@ -38,7 +38,7 @@ public class PackageController {
     @GetMapping("/add")
     public String add(Model model){
         model.addAttribute("package", new Package());
-//        model.addAttribute("cities", cityService.findAll());
+        model.addAttribute("cities", cityService.findAll());
         model.addAttribute("menuActive", "packages");
         return "package/form";
     }
@@ -46,11 +46,11 @@ public class PackageController {
     @PostMapping("/save")
     public String add(@Valid @ModelAttribute Package pack, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
-//            model.addAttribute("cities", cityService.findAll());
+            model.addAttribute("cities", cityService.findAll());
             return "package/form";
         }
         pack.setEnable(true);
-//        pack.setImage("image");
+        pack.setImage("image");
         packageService.save(pack);
         model.addAttribute("menuActive", "packages");
         redirectAttributes.addFlashAttribute("success", "El paquete ha sido creado");

@@ -16,9 +16,9 @@ public class City {
 
     private String description;
 
-//    @NotNull
-//    @OneToMany(mappedBy = "city")
-//    private List<Package> packages;
+    @NotNull
+    @OneToMany(mappedBy = "city")
+    private List<Package> packages;
 
     public City() {
 
@@ -48,11 +48,11 @@ public class City {
         this.description = description;
     }
 
-//    public List<Package> getPackages() {
-//        return packages;
-//    }
+    public List<Package> getPackages() {
+        return packages;
+    }
 
-//    public void setPackages(List<Package> packages) {
-//        this.packages = packages;
-//    }
+    public void setPackages(List<Package> packages) {
+        this.packages = packages;
+    }
 }

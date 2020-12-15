@@ -17,8 +17,14 @@ public class User {
 
     private boolean enabled;
 
-//    @OneToMany(mappedBy="user")
-//    private List<Customer> customers;
+    @OneToMany(mappedBy="user")
+    private List<Customer> customers;
+
+    @OneToMany(mappedBy = "user")
+    private List<Staff> staff;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<Authority> authorities;
 
     public User() {
     }
@@ -47,13 +53,13 @@ public class User {
         this.password = password;
     }
 
-//    public List<Customer> getCustomers() {
-//        return customers;
-//    }
+    public List<Customer> getCustomers() {
+        return customers;
+    }
 
-//    public void setCustomers(List<Customer> customers) {
-//        this.customers = customers;
-//    }
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
+    }
 
     public boolean isEnabled() {
         return enabled;
@@ -61,5 +67,21 @@ public class User {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public List<Staff> getStaff() {
+        return staff;
+    }
+
+    public void setStaff(List<Staff> staff) {
+        this.staff = staff;
+    }
+
+    public List<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
     }
 }

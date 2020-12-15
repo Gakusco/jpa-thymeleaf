@@ -35,8 +35,8 @@ public class CustomerController {
     @Autowired
     CustomerValidation customerValidation;
 
-//    @Autowired
-//    UserService userService;
+    @Autowired
+    UserService userService;
 
     @GetMapping("/list")
     public String listar(Model model){
@@ -58,6 +58,11 @@ public class CustomerController {
          if (result.hasErrors()){
             return "customer/form";
         }
+        User user = new User();
+         user.setUsername("Mariano");
+         user.setPassword("Estelano");
+         User newUser = userService.save(user);
+         customer.setUser(newUser);
         customerService.save(customer);
         model.addAttribute("menuActive", "customers");
         redirectAttributes.addFlashAttribute("success", "El cliente ha sido registrado");

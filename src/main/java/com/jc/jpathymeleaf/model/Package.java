@@ -23,14 +23,14 @@ public class Package {
     @NotEmpty(message="No debe estar vacio")
     private String description;
 
-//    private String image;
+    private String image;
 
     private boolean enable;
 
-//    @NotNull
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name="id_city")
-//    private City city;
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="id_city")
+    private City city;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
@@ -92,19 +92,19 @@ public class Package {
         this.customers.remove(customer);
     }
 
-//    public String getImage() {
-//        return image;
-//    }
-//
-//    public void setImage(String image) {
-//        this.image = image;
-//    }
-//
-//    public City getCity() {
-//        return city;
-//    }
-//
-//    public void setCity(City city) {
-//        this.city = city;
-//    }
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
 }
