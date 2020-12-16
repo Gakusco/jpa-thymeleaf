@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface UserService extends Crud<User> {
 
+    List<User> findByAuthoritiesAuthority(String authority);
 }

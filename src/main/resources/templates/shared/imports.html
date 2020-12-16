@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-<script th:fragment="jquery" th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+    <script th:fragment="jquery" th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
 
     <div hidden="hidden" th:fragment="alerts">
         <div id="success-alert" class="alert alert-success" th:if="${success}" th:text="${success}"></div>
@@ -111,4 +109,3 @@
             /*]]>*/
         </script>
     </div>
-</html>

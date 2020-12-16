@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="shared/head :: head">
+    <meta charset="UTF-8">
+    <title>Lista gerentes</title>
+</head>
+<body>
+<div th:replace="shared/imports :: alerts"></div>
+<div th:replace="shared/menu :: navbar"></div>
+
+<div class="card m-4 bg-info text-white">
+    <div class="card-header">
+        <h2 class="float-lg-left">Gerentes</h2>
+        <a type="button" class="btn btn-outline-light float-lg-right" th:href="@{/manager/add}">Registrar</a>
+    </div>
+    <div th:replace="shared/list-users :: list-users(${managers}, null, ${menuActive})"></div>
+</div>
+<div th:replace="shared/imports :: jquery"></div>
+<div th:replace="shared/imports :: js-alerts"></div>
+</body>
+</html>

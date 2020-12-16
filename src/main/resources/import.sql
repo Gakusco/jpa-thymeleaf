@@ -10,8 +10,8 @@ INSERT INTO authorities (authority, id_user) VALUES ('ROLE_CUSTOMER', 1);
 INSERT INTO authorities (authority, id_user) VALUES ('ROLE_CUSTOMER', 2);
 INSERT INTO authorities (authority, id_user) VALUES ('ROLE_CUSTOMER', 3);
 
-INSERT INTO authorities (authority, id_user) VALUES ('ROLE_ADMINISTRADOR', 4);
-INSERT INTO authorities (authority, id_user) VALUES ('ROLE_ADMINISTRADOR', 5);
+INSERT INTO authorities (authority, id_user) VALUES ('ROLE_GERENTE', 4);
+INSERT INTO authorities (authority, id_user) VALUES ('ROLE_GERENTE', 5);
 INSERT INTO authorities (authority, id_user) VALUES ('ROLE_ADMINISTRADOR', 6);
 
 INSERT INTO customers (birth, name, run, id_user) VALUES ('1992-11-25', 'Juan Carlos', '19414979-4',1);

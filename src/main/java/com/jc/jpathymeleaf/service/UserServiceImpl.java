@@ -68,4 +68,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),user.isEnabled(), true, true, true, authorities);
     }
+
+    @Override
+    public List<User> findByAuthoritiesAuthority(String authority) {
+        return userRepository.findByAuthoritiesAuthority(authority);
+    }
 }

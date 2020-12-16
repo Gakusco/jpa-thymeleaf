@@ -1,6 +1,13 @@
 package com.jc.jpathymeleaf.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name="staff")
@@ -10,11 +17,15 @@ public class Staff {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Size(min = 2, max =20, message= "El tamaño del nombre debe estar entre 2 y 20")
     private String name;
 
     private String run;
 
-    private String birth;
+    @NotNull(message = "Debe ingresar su fecha de nacimiento")
+    @Past
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birth;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_user")
@@ -54,11 +65,11 @@ public class Staff {
         this.user = user;
     }
 
-    public String getBirth() {
+    public LocalDate getBirth() {
         return birth;
     }
 
-    public void setBirth(String birth) {
+    public void setBirth(LocalDate birth) {
         this.birth = birth;
     }
 }

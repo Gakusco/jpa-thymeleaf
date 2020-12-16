@@ -1,5 +1,6 @@
 package com.jc.jpathymeleaf.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,7 +32,8 @@ public class Customer {
 
     @NotNull(message = "Debe ingresar su fecha de nacimiento")
     @Past
-    private Date birth;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birth;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "customers")
     private List<Package> packages;
@@ -67,14 +70,14 @@ public class Customer {
         this.run = run;
     }
 
-    public Date getBirth() {
+    public LocalDate getBirth() {
         return birth;
     }
 
-    public void setBirth(Date birth) {
+    public void setBirth(LocalDate birth) {
         this.birth = birth;
     }
-	
+
     public List<Package> getPackages(){
     	return packages;
     }

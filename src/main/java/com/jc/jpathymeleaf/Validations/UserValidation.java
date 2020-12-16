@@ -10,7 +10,7 @@ import org.springframework.validation.Validator;
 import java.util.List;
 
 @Component
-public class CustomerValidation implements Validator {
+public class UserValidation implements Validator {
     @Override
     public boolean supports(Class<?> aClass) {
         return Customer.class.isAssignableFrom(aClass);

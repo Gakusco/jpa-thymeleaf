@@ -1,9 +1,3 @@
-<!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-</head>
-<body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="navbar">
     <a class="navbar-brand" th:href="@{/}">Travel</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,9 +11,9 @@
             <li th:class="${menuActive == 'packages' ? 'nav-item active' : 'nav-item'}">
                 <a class="nav-link" th:href="@{/package/list}">Paquetes</a>
             </li>
+            <li th:class="${menuActive == 'managers' ? 'nav-item active' : 'nav-item'}">
+                <a class="nav-link" th:href="@{/manager/list}">Gerentes</a>
+            </li>
         </ul>
     </div>
 </nav>
-<div th:replace = "shared/imports :: navbar"></div>
-</body>
-</html>

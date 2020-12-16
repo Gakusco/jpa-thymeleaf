@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="card-footer bg-white">
-                    <div th:replace="shared/list-customer :: list-customer"></div>
+                    <div th:replace="shared/list-users :: list-users(${customers}, ${package}, ${menuActive})"></div>
                 </div>
             </div>
         </div>
