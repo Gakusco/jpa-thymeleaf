@@ -5,13 +5,13 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <li th:class="${menuActive == 'customers' ? 'nav-item active' : 'nav-item'}">
+            <li th:class="${menuActive == 'customer' ? 'nav-item active' : 'nav-item'}">
                 <a class="nav-link" th:href="@{/customer/list}">Clientes</a>
             </li>
-            <li th:class="${menuActive == 'packages' ? 'nav-item active' : 'nav-item'}">
+            <li th:class="${menuActive == 'package' ? 'nav-item active' : 'nav-item'}">
                 <a class="nav-link" th:href="@{/package/list}">Paquetes</a>
             </li>
-            <li th:class="${menuActive == 'managers' ? 'nav-item active' : 'nav-item'}">
+            <li th:class="${menuActive == 'manager' ? 'nav-item active' : 'nav-item'}">
                 <a class="nav-link" th:href="@{/manager/list}">Gerentes</a>
             </li>
         </ul>

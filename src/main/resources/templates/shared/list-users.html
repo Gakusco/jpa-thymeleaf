@@ -6,8 +6,9 @@
             <th scope="col">Nombre</th>
             <th scope="col" class="text-center">Run</th>
             <th scope="col">Fecha nacimiento</th>
-            <th th:if="${menuActive == 'customers'}" scope="col" class="text-center">Paquetes</th>
-            <th scope="col" th:if="${menuActive == 'packages'}" class="text-center">Eliminar</th>
+            <th th:if="${menuActive == 'customer'}" scope="col" class="text-center">Paquetes</th>
+            <th scope="col" th:if="${menuActive == 'package'}" class="text-center">Eliminar</th>
+            <th scope="col" th:if="${menuActive == 'customer' or menuActive == 'manager'}" class="text-center">habilitar/deshabilitar</th>
         </tr>
         </thead>
         <tbody th:each="user, iterador: ${users}">
@@ -16,17 +17,35 @@
             <td th:text="${user.name}"></td>
             <td th:text="${user.run}" class="text-center"></td>
             <td th:text="${#temporals.format(user.birth, 'dd MMMM yyyy')}"></td>
-            <td th:if="${menuActive == 'customers'}" class="text-center">
+            <td th:if="${menuActive == 'customer'}" class="text-center">
                 <a class="btn btn-outline-success" th:href="@{'/customer/package/' + ${user.id}}"
                    title="add packages">
                     <i class="fas fa-plus"></i>
                 </a>
             </td>
-            <td th:if="${menuActive == 'packages'}" class="text-center">
+            <td th:if="${menuActive == 'package'}" class="text-center">
                 <a class="btn btn-outline-danger"
-                   th:onclick="'deleteCustomer('+${package.id} + ',' + ${user.id}+')'" title="delete package">
+                   th:onclick="'deleteCustomer('+${package.id} + ',' + ${user.id}+')'" title="eliminar">
                     <i class="far fa-trash-alt"></i>
                 </a></td>
+            <td th:if="${menuActive == 'customer' or menuActive == 'manager'}" class="text-center">
+                <button th:if="${user.user.enabled == true}"
+                        class="btn btn-outline-success"
+                        title="to disable"
+                        th:data-userid="${user.id}"
+                        th:data-menu-active="${menuActive}"
+                        th:onclick="deleteUser(this.getAttribute('data-userid'), this.getAttribute('data-menu-active'))">
+                    <i class="fas fa-check"></i>
+                </button>
+                <button th:if="${user.user.enabled == false}"
+                        class="btn btn-outline-danger"
+                        title="enable"
+                        th:data-userid="${user.id}"
+                        th:data-menu-active="${menuActive}"
+                        th:onclick="deleteUser(this.getAttribute('data-userid'), this.getAttribute('data-menu-active'))">
+                    <i class="fas fa-times"></i>
+                </button>
+            </td>
         </tr>
         </tbody>
     </table>

@@ -53,14 +53,14 @@ public class CustomerController {
     @GetMapping("/list")
     public String listar(Model model){
         model.addAttribute("customers", customerService.findAll());
-        model.addAttribute("menuActive", "customers");
+        model.addAttribute("menuActive", "customer");
         return "customer/list";
     }
 
     @GetMapping("/add")
     public String add(Model model){
         model.addAttribute("customer", new Customer());
-        model.addAttribute("menuActive", "customers");
+        model.addAttribute("menuActive", "customer");
         return "customer/form";
     }
 
@@ -78,7 +78,7 @@ public class CustomerController {
         authority.setUser(user);
         authorityService.save(authority);
         customerService.save(customer);
-        model.addAttribute("menuActive", "customers");
+        model.addAttribute("menuActive", "customer");
         redirectAttributes.addFlashAttribute("success", "El cliente ha sido registrado");
         return "redirect:/customer/list";
     }
@@ -131,7 +131,7 @@ public class CustomerController {
         model.addAttribute("customer", customer);
         model.addAttribute("packagesNew", packages);
         model.addAttribute("packages", packagesCustomer);
-        model.addAttribute("menuActive", "customers");
+        model.addAttribute("menuActive", "customer");
     }
 
 }

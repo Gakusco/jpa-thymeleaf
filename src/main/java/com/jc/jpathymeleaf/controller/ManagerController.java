@@ -55,14 +55,14 @@ public class ManagerController {
             }
         }
         model.addAttribute("managers", managers);
-        model.addAttribute("menuActive", "managers");
+        model.addAttribute("menuActive", "manager");
         return "manager/list";
     }
 
     @GetMapping("/add")
     public String add(Model model){
         model.addAttribute("staff", new Staff());
-        model.addAttribute("menuActive", "customers");
+        model.addAttribute("menuActive", "manager");
         return "manager/form";
     }
 
@@ -80,7 +80,7 @@ public class ManagerController {
         authority.setUser(user);
         authorityService.save(authority);
         staffService.save(staff);
-        model.addAttribute("menuActive", "managers");
+        model.addAttribute("menuActive", "manager");
         redirectAttributes.addFlashAttribute("success", "El gerente ha sido registrado");
         return "redirect:/manager/list";
     }

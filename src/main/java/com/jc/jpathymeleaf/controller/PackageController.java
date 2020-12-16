@@ -32,7 +32,7 @@ public class PackageController {
     @GetMapping("/list")
     public String list(Model model){
         model.addAttribute("packages", packageService.findAll());
-        model.addAttribute("menuActive", "packages");
+        model.addAttribute("menuActive", "package");
         return "package/list";
     }
 
@@ -40,7 +40,7 @@ public class PackageController {
     public String add(Model model){
         model.addAttribute("package", new Package());
         model.addAttribute("cities", cityService.findAll());
-        model.addAttribute("menuActive", "packages");
+        model.addAttribute("menuActive", "package");
         return "package/form";
     }
 
@@ -53,7 +53,7 @@ public class PackageController {
         pack.setEnable(true);
         pack.setImage("image");
         packageService.save(pack);
-        model.addAttribute("menuActive", "packages");
+        model.addAttribute("menuActive", "package");
         redirectAttributes.addFlashAttribute("success", "El paquete ha sido creado");
         return "redirect:/package/list";
     }
@@ -98,14 +98,14 @@ public class PackageController {
     @GetMapping("/enable/{idPackage}")
     public String enable(Model model, @PathVariable String idPackage){
         isEnabled(true, model, idPackage);
-        model.addAttribute("menuActive", "packages");
+        model.addAttribute("menuActive", "package");
         return "package/list :: list-pack";
     }
 
     @GetMapping("/disable/{idPackage}")
     public String disable(Model model, @PathVariable String idPackage){
         isEnabled(false, model, idPackage);
-        model.addAttribute("menuActive", "packages");
+        model.addAttribute("menuActive", "package");
         return "package/list :: list-pack";
     }
 
@@ -114,7 +114,7 @@ public class PackageController {
         packOptional.ifPresent(pack -> {
             pack.setEnable(change);
             packageService.save(pack);
-            model.addAttribute("menuActive", "packages");
+            model.addAttribute("menuActive", "package");
             model.addAttribute("packages", packageService.findAll());
         });
     }
@@ -128,6 +128,6 @@ public class PackageController {
         model.addAttribute("package", pack);
         model.addAttribute("customersNew", customers);
         model.addAttribute("customers", customersPackage);
-        model.addAttribute("menuActive", "packages");
+        model.addAttribute("menuActive", "package");
     }
 }
