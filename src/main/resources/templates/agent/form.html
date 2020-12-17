@@ -11,10 +11,10 @@
         <h2 th:text="${title}"></h2>
     </div>
     <div class="card-body bg-white text-dark">
-        <form class="form" th:action="@{/manager/} + ${staff.id == 0 ? 'save':'edit'}" th:object="${staff}" method="post">
+        <form class="form" th:action="@{/agent/} + ${staff.id == 0 ? 'save':'edit'}" th:object="${staff}" method="post">
             <div th:replace="shared/form-register :: form-register(${staff})"></div>
             <button type="submit" class="btn btn-outline-primary"><i class="fas fa-plus"></i> registrar</button>
-            <a class="btn btn-outline-secondary" th:href="@{/manager/list}"><i class="fas fa-long-arrow-alt-left"></i></a>
+            <a class="btn btn-outline-secondary" th:href="@{/agent/list}"><i class="fas fa-long-arrow-alt-left"></i></a>
         </form>
     </div>
 </div>

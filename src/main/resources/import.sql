@@ -4,14 +4,23 @@ INSERT INTO users (enabled, password, username) VALUES (true, '$2a$04$.Gqg1Gmqx6
 
 INSERT INTO users (enabled, password, username) VALUES (true, '$2a$04$.Gqg1Gmqx66Vb5XgzBB3Pe4l5CGTAmtSuQ27U5dh.rSdKyuj51uo6', 'Merlin');
 INSERT INTO users (enabled, password, username) VALUES (true, '$2a$04$.Gqg1Gmqx66Vb5XgzBB3Pe4l5CGTAmtSuQ27U5dh.rSdKyuj51uo6', 'Martin');
+
 INSERT INTO users (enabled, password, username) VALUES (true, '$2a$04$.Gqg1Gmqx66Vb5XgzBB3Pe4l5CGTAmtSuQ27U5dh.rSdKyuj51uo6', 'Paz');
+
+INSERT INTO users (enabled, password, username) VALUES (true, '$2a$04$.Gqg1Gmqx66Vb5XgzBB3Pe4l5CGTAmtSuQ27U5dh.rSdKyuj51uo6', 'Maxtil');
+INSERT INTO users (enabled, password, username) VALUES (true, '$2a$04$.Gqg1Gmqx66Vb5XgzBB3Pe4l5CGTAmtSuQ27U5dh.rSdKyuj51uo6', 'Esteban');
+
 
 INSERT INTO authorities (authority, id_user) VALUES ('ROLE_CLIENTE', 1);
 INSERT INTO authorities (authority, id_user) VALUES ('ROLE_CLIENTE', 2);
 INSERT INTO authorities (authority, id_user) VALUES ('ROLE_CLIENTE', 3);
 
+INSERT INTO authorities (authority, id_user) VALUES ('ROLE_AGENTE', 7);
+INSERT INTO authorities (authority, id_user) VALUES ('ROLE_AGENTE', 8);
+
 INSERT INTO authorities (authority, id_user) VALUES ('ROLE_GERENTE', 4);
 INSERT INTO authorities (authority, id_user) VALUES ('ROLE_GERENTE', 5);
+
 INSERT INTO authorities (authority, id_user) VALUES ('ROLE_ADMINISTRADOR', 6);
 
 INSERT INTO customers (birth, name, run, id_user) VALUES ('1992-11-25', 'Juan Carlos', '19414979-4',1);
@@ -21,6 +30,9 @@ INSERT INTO customers (birth, name, run, id_user) VALUES ('1992-11-21', 'Catalin
 INSERT INTO staff (birth, name, run, id_user) VALUES ('1992-11-25', 'Merlin', '19414979-4',4);
 INSERT INTO staff (birth, name, run, id_user) VALUES ('1992-11-20', 'Martin', '19300979-4',5);
 INSERT INTO staff (birth, name, run, id_user) VALUES ('1992-11-21', 'Paz', '19411100-4',6);
+
+INSERT INTO staff (birth, name, run, id_user) VALUES ('1992-11-20', 'Maxtil', '19300979-4',7);
+INSERT INTO staff (birth, name, run, id_user) VALUES ('1992-11-21', 'Esteban', '19411100-4',8);
 
 INSERT INTO cities (id, description, name) VALUES (1, 'Lugar calido', 'Pucon');
 INSERT INTO cities (id, description, name) VALUES (2, 'Lugar frio', 'Las Trancas');

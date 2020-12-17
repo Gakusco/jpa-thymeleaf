@@ -2,34 +2,28 @@ package com.jc.jpathymeleaf.controller;
 
 import com.jc.jpathymeleaf.Validations.UserValidation;
 import com.jc.jpathymeleaf.model.Authority;
-import com.jc.jpathymeleaf.model.Customer;
-import com.jc.jpathymeleaf.model.Package;
 import com.jc.jpathymeleaf.model.Staff;
 import com.jc.jpathymeleaf.model.User;
 import com.jc.jpathymeleaf.service.AuthorityService;
 import com.jc.jpathymeleaf.service.StaffService;
 import com.jc.jpathymeleaf.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/manager")
+@RequestMapping("/agent")
 @SessionAttributes("staff")
-public class ManagerController {
+public class AgentController {
 
     @Autowired
     private StaffService staffService;
@@ -49,89 +43,89 @@ public class ManagerController {
 
     @GetMapping("/list")
     public String listar(Model model){
-        reloadListManager(model);
-        return "manager/list";
+        reloadListAgent(model);
+        return "agent/list";
     }
 
     @GetMapping("/add")
     public String add(Model model){
-        model.addAttribute("title","Registrar gerente");
+        model.addAttribute("title","Registrar agente");
         model.addAttribute("staff", new Staff());
-        model.addAttribute("menuActive", "manager");
-        return "manager/form";
+        model.addAttribute("menuActive", "agent");
+        return "agent/form";
     }
 
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute Staff staff, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         // userValidation.validate(staff, result);
         if (result.hasErrors()){
-            return "manager/form";
+            return "agent/form";
         }
         staff.getUser().setPassword(bCryptPasswordEncoder.encode(staff.getUser().getPassword()));
         staff.getUser().setEnabled(true);
         User user = userService.save(staff.getUser());
         staff.setUser(user);
-        Authority authority = new Authority("ROLE_GERENTE");
+        Authority authority = new Authority("ROLE_AGENTE");
         authority.setUser(user);
         authorityService.save(authority);
         staffService.save(staff);
-        model.addAttribute("menuActive", "manager");
-        redirectAttributes.addFlashAttribute("success", "El gerente ha sido registrado");
-        return "redirect:/manager/list";
+        model.addAttribute("menuActive", "agent");
+        redirectAttributes.addFlashAttribute("success", "El agente ha sido registrado");
+        return "redirect:/agent/list";
     }
 
-    @GetMapping("/enable/{idManager}")
-    public String enable(Model model, @PathVariable String idManager){
-        isEnabled(true, model, idManager);
-        return "manager/list :: list-user";
+    @GetMapping("/enable/{idAgent}")
+    public String enable(Model model, @PathVariable String idAgent){
+        isEnabled(true, model, idAgent);
+        return "agent/list :: list-user";
     }
 
-    @GetMapping("/disable/{idManager}")
-    public String disable(Model model, @PathVariable String idManager){
-        isEnabled(false, model, idManager);
-        return "manager/list :: list-user";
+    @GetMapping("/disable/{idAgent}")
+    public String disable(Model model, @PathVariable String idAgent){
+        isEnabled(false, model, idAgent);
+        return "agent/list :: list-user";
     }
 
-    @GetMapping("/edit/{idManager}")
-    public String editManager(@PathVariable String idManager, Model model) {
-        Optional<Staff> staff = staffService.findById(Integer.parseInt(idManager));
+    @GetMapping("/edit/{idAgent}")
+    public String editAgent(@PathVariable String idAgent, Model model) {
+        Optional<Staff> staff = staffService.findById(Integer.parseInt(idAgent));
         staff.ifPresent(s -> model.addAttribute("staff", s));
-        model.addAttribute("title","Editar gerente");
-        model.addAttribute("menuActive","manager");
-        return "manager/form";
+        model.addAttribute("title","Editar agente");
+        model.addAttribute("menuActive","agent");
+        return "agent/form";
     }
 
     @PostMapping("/edit")
     public String edit(@Valid @ModelAttribute Staff staff, BindingResult result, RedirectAttributes redirectAttributes) {
 //        userValidation.validate(customer, result);
         if (result.hasErrors()){
-            return "manager/form";
+            return "agent/form";
         }
+        System.out.println(staff.getId());
         staffService.save(staff);
-        redirectAttributes.addFlashAttribute("success", "El gerente a sido modificado");
-        return "redirect:/manager/list";
+        redirectAttributes.addFlashAttribute("success", "El agente a sido modificado");
+        return "redirect:/agent/list";
     }
 
-    private void isEnabled(Boolean change, Model model, String idManager) {
-        Optional<Staff> staffOptional = staffService.findById(Integer.parseInt(idManager));
+    private void isEnabled(Boolean change, Model model, String idAgent) {
+        Optional<Staff> staffOptional = staffService.findById(Integer.parseInt(idAgent));
         staffOptional.ifPresent(staff -> {
             staff.getUser().setEnabled(change);
             userService.save(staff.getUser());
-            reloadListManager(model);
+            reloadListAgent(model);
         });
     }
 
-    private void reloadListManager(Model model) {
+    private void reloadListAgent(Model model) {
         List<Staff> staffs = staffService.findAll();
-        List<User> users = userService.findByAuthoritiesAuthority("ROLE_GERENTE");
-        List<Staff> managers = new ArrayList<>();
+        List<User> users = userService.findByAuthoritiesAuthority("ROLE_AGENTE");
+        List<Staff> agents = new ArrayList<>();
         for (User user: users){
             for (Staff s : staffs){
-                if(user.getId() == s.getUser().getId()) managers.add(s);
+                if(user.getId() == s.getUser().getId()) agents.add(s);
             }
         }
-        model.addAttribute("managers", managers);
-        model.addAttribute("menuActive", "manager");
+        model.addAttribute("agents", agents);
+        model.addAttribute("menuActive", "agent");
     }
-
 }

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="shared/head :: head">
+    <meta charset="UTF-8">
+    <title>Lista agentes</title>
+</head>
+<body>
+<div th:replace="shared/imports :: alerts"></div>
+<div th:replace="shared/menu :: navbar"></div>
+
+<div class="card m-4 bg-info text-white">
+    <div class="card-header">
+        <h2 class="float-lg-left">Agentes</h2>
+        <a type="button" class="btn btn-outline-light float-lg-right" th:href="@{/agent/add}">Registrar</a>
+    </div>
+    <div th:id="list-user" th:fragment="list-user">
+        <div th:replace="shared/list-users :: list-users(${agents}, null, ${menuActive})"></div>
+    </div>
+</div>
+<div th:replace="shared/imports :: jquery"></div>
+<div th:replace="shared/imports :: js-alerts"></div>
+<div th:replace="shared/imports :: js-user"></div>
+</body>
+</html>

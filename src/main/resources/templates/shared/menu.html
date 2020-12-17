@@ -8,11 +8,14 @@
             <li th:class="${menuActive == 'customer' ? 'nav-item active' : 'nav-item'}">
                 <a class="nav-link" th:href="@{/customer/list}">Clientes</a>
             </li>
-            <li th:class="${menuActive == 'package' ? 'nav-item active' : 'nav-item'}">
-                <a class="nav-link" th:href="@{/package/list}">Paquetes</a>
-            </li>
             <li th:class="${menuActive == 'manager' ? 'nav-item active' : 'nav-item'}">
                 <a class="nav-link" th:href="@{/manager/list}">Gerentes</a>
+            </li>
+            <li th:class="${menuActive == 'agent' ? 'nav-item active' : 'nav-item'}">
+                <a class="nav-link" th:href="@{/agent/list}">Agentes</a>
+            </li>
+            <li th:class="${menuActive == 'package' ? 'nav-item active' : 'nav-item'}">
+                <a class="nav-link" th:href="@{/package/list}">Paquetes</a>
             </li>
         </ul>
     </div>
