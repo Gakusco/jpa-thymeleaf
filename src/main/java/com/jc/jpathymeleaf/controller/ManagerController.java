@@ -3,6 +3,7 @@ package com.jc.jpathymeleaf.controller;
 import com.jc.jpathymeleaf.Validations.UserValidation;
 import com.jc.jpathymeleaf.model.Authority;
 import com.jc.jpathymeleaf.model.Customer;
+import com.jc.jpathymeleaf.model.Package;
 import com.jc.jpathymeleaf.model.Staff;
 import com.jc.jpathymeleaf.model.User;
 import com.jc.jpathymeleaf.service.AuthorityService;
@@ -23,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/manager")
@@ -46,16 +48,7 @@ public class ManagerController {
 
     @GetMapping("/list")
     public String listar(Model model){
-        List<Staff> staffs = staffService.findAll();
-        List<User> users = userService.findByAuthoritiesAuthority("ROLE_GERENTE");
-        List<Staff> managers = new ArrayList<>();
-        for (User user: users){
-            for (Staff staff : staffs){
-                if(user.getId() == staff.getUser().getId()) managers.add(staff);
-            }
-        }
-        model.addAttribute("managers", managers);
-        model.addAttribute("menuActive", "manager");
+        reloadListManager(model);
         return "manager/list";
     }
 
@@ -83,6 +76,40 @@ public class ManagerController {
         model.addAttribute("menuActive", "manager");
         redirectAttributes.addFlashAttribute("success", "El gerente ha sido registrado");
         return "redirect:/manager/list";
+    }
+
+    @GetMapping("/enable/{idManager}")
+    public String enable(Model model, @PathVariable String idManager){
+        isEnabled(true, model, idManager);
+        return "manager/list :: list-user";
+    }
+
+    @GetMapping("/disable/{idManager}")
+    public String disable(Model model, @PathVariable String idManager){
+        isEnabled(false, model, idManager);
+        return "manager/list :: list-user";
+    }
+
+    private void isEnabled(Boolean change, Model model, String idManager) {
+        Optional<Staff> staffOptional = staffService.findById(Integer.parseInt(idManager));
+        staffOptional.ifPresent(staff -> {
+            staff.getUser().setEnabled(change);
+            userService.save(staff.getUser());
+            reloadListManager(model);
+        });
+    }
+
+    private void reloadListManager(Model model) {
+        List<Staff> staffs = staffService.findAll();
+        List<User> users = userService.findByAuthoritiesAuthority("ROLE_GERENTE");
+        List<Staff> managers = new ArrayList<>();
+        for (User user: users){
+            for (Staff s : staffs){
+                if(user.getId() == s.getUser().getId()) managers.add(s);
+            }
+        }
+        model.addAttribute("managers", managers);
+        model.addAttribute("menuActive", "manager");
     }
 
 }

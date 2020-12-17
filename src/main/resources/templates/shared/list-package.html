@@ -16,20 +16,20 @@
             <td th:text="${package.name}"></td>
             <td th:text="${package.description}"></td>
             <td th:if="${customer == null}" class="text-center">
-                <button th:if="${package.enable == true}" class="btn btn-outline-success" title="to disable" th:onclick="'disable('+${package.id}+')'">
+                <button th:if="${package.enable == true}" class="btn btn-outline-success" title="deshabilitar" th:onclick="'disable('+${package.id}+')'">
                     <i class="fas fa-check"></i>
                 </button>
-                <button th:if="${package.enable == false}" class="btn btn-outline-danger" title="enable" th:onclick="'enable('+${package.id}+')'">
+                <button th:if="${package.enable == false}" class="btn btn-outline-danger" title="habilitar" th:onclick="'enable('+${package.id}+')'">
                     <i class="fas fa-times"></i>
                 </button>
             </td>
             <td th:if="${customer}" class="text-center">
-                <button class="btn btn-outline-danger" th:onclick="'deletePackage('+${package.id} + ',' + ${customer.id}+')'" title="delete package">
+                <button class="btn btn-outline-danger" th:onclick="'deletePackage('+${package.id} + ',' + ${customer.id}+')'" title="eliminar paquete">
                     <i class="far fa-trash-alt"></i>
                 </button>
             </td>
             <td th:if="${customer == null}" class="text-center">
-                <a th:if="${package.enable}" class="btn btn-outline-success" th:href="@{'/package/customer/' + ${package.id}}" title="add customers">
+                <a th:if="${package.enable}" class="btn btn-outline-success" th:href="@{'/package/customer/' + ${package.id}}" title="agregar clientes">
                     <i class="fas fa-plus"></i>
                 </a>
                 <button th:if="${not package.enable}" class="btn btn-outline-dark disabled">

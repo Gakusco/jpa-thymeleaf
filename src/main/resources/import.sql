@@ -6,9 +6,9 @@ INSERT INTO users (enabled, password, username) VALUES (true, '$2a$04$.Gqg1Gmqx6
 INSERT INTO users (enabled, password, username) VALUES (true, '$2a$04$.Gqg1Gmqx66Vb5XgzBB3Pe4l5CGTAmtSuQ27U5dh.rSdKyuj51uo6', 'Martin');
 INSERT INTO users (enabled, password, username) VALUES (true, '$2a$04$.Gqg1Gmqx66Vb5XgzBB3Pe4l5CGTAmtSuQ27U5dh.rSdKyuj51uo6', 'Paz');
 
-INSERT INTO authorities (authority, id_user) VALUES ('ROLE_CUSTOMER', 1);
-INSERT INTO authorities (authority, id_user) VALUES ('ROLE_CUSTOMER', 2);
-INSERT INTO authorities (authority, id_user) VALUES ('ROLE_CUSTOMER', 3);
+INSERT INTO authorities (authority, id_user) VALUES ('ROLE_CLIENTE', 1);
+INSERT INTO authorities (authority, id_user) VALUES ('ROLE_CLIENTE', 2);
+INSERT INTO authorities (authority, id_user) VALUES ('ROLE_CLIENTE', 3);
 
 INSERT INTO authorities (authority, id_user) VALUES ('ROLE_GERENTE', 4);
 INSERT INTO authorities (authority, id_user) VALUES ('ROLE_GERENTE', 5);

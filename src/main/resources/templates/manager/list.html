@@ -13,7 +13,9 @@
         <h2 class="float-lg-left">Gerentes</h2>
         <a type="button" class="btn btn-outline-light float-lg-right" th:href="@{/manager/add}">Registrar</a>
     </div>
-    <div th:replace="shared/list-users :: list-users(${managers}, null, ${menuActive})"></div>
+    <div th:id="list-user" th:fragment="list-user">
+        <div th:replace="shared/list-users :: list-users(${managers}, null, ${menuActive})"></div>
+    </div>
 </div>
 <div th:replace="shared/imports :: jquery"></div>
 <div th:replace="shared/imports :: js-alerts"></div>

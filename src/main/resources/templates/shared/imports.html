@@ -118,14 +118,14 @@
         <script th:inline="javascript" type="text/javascript">
             /*<![CDATA[*/
 
-            function enableUser(packageId) {
-                let url = '/package/enable/' + packageId;
-                $("#list-pack").load(url);
+            function enabledUser(packageId, menuActive) {
+                let url = '/'+menuActive+'/enable/' + packageId;
+                $("#list-user").load(url);
             }
 
-            function disableUser(packageId) {
-                let url = '/package/disable/' + packageId;
-                $("#list-pack").load(url);
+            function disabledUser(packageId, menuActive) {
+                let url = '/'+menuActive+'/disable/' + packageId;
+                $("#list-user").load(url);
             }
 
             /*]]>*/

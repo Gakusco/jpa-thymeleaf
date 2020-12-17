@@ -1,10 +1,8 @@
 package com.jc.jpathymeleaf.controller;
 
 import com.jc.jpathymeleaf.Validations.UserValidation;
-import com.jc.jpathymeleaf.model.Authority;
-import com.jc.jpathymeleaf.model.Customer;
+import com.jc.jpathymeleaf.model.*;
 import com.jc.jpathymeleaf.model.Package;
-import com.jc.jpathymeleaf.model.User;
 import com.jc.jpathymeleaf.service.AuthorityService;
 import com.jc.jpathymeleaf.service.CustomerService;
 import com.jc.jpathymeleaf.service.PackageService;
@@ -52,8 +50,7 @@ public class CustomerController {
 
     @GetMapping("/list")
     public String listar(Model model){
-        model.addAttribute("customers", customerService.findAll());
-        model.addAttribute("menuActive", "customer");
+        reloadListCustomer(model);
         return "customer/list";
     }
 
@@ -131,6 +128,40 @@ public class CustomerController {
         model.addAttribute("customer", customer);
         model.addAttribute("packagesNew", packages);
         model.addAttribute("packages", packagesCustomer);
+        model.addAttribute("menuActive", "customer");
+    }
+
+    @GetMapping("/enable/{idCustomer}")
+    public String enable(Model model, @PathVariable String idCustomer){
+        isEnabled(true, model, idCustomer);
+        return "customer/list :: list-user";
+    }
+
+    @GetMapping("/disable/{idCustomer}")
+    public String disable(Model model, @PathVariable String idCustomer){
+        isEnabled(false, model, idCustomer);
+        return "customer/list :: list-user";
+    }
+
+    private void isEnabled(Boolean change, Model model, String idCustomer) {
+        Optional<Customer> customerOptional = customerService.findById(Integer.parseInt(idCustomer));
+        customerOptional.ifPresent(customer -> {
+            customer.getUser().setEnabled(change);
+            userService.save(customer.getUser());
+            reloadListCustomer(model);
+        });
+    }
+
+    private void reloadListCustomer(Model model) {
+        List<Customer> customerList = customerService.findAll();
+        List<User> users = userService.findByAuthoritiesAuthority("ROLE_CLIENTE");
+        List<Customer> customers = new ArrayList<>();
+        for (User user: users){
+            for (Customer c : customerList){
+                if(user.getId() == c.getUser().getId()) customers.add(c);
+            }
+        }
+        model.addAttribute("customers", customers);
         model.addAttribute("menuActive", "customer");
     }
 

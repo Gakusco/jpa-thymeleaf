@@ -98,14 +98,12 @@ public class PackageController {
     @GetMapping("/enable/{idPackage}")
     public String enable(Model model, @PathVariable String idPackage){
         isEnabled(true, model, idPackage);
-        model.addAttribute("menuActive", "package");
         return "package/list :: list-pack";
     }
 
     @GetMapping("/disable/{idPackage}")
     public String disable(Model model, @PathVariable String idPackage){
         isEnabled(false, model, idPackage);
-        model.addAttribute("menuActive", "package");
         return "package/list :: list-pack";
     }
 
@@ -125,6 +123,8 @@ public class PackageController {
         for ( Customer customerPackage : customersPackage ) {
             customers.removeIf(p -> p.getId() == customerPackage.getId());
         }
+        customers.removeIf(customer -> !customer.getUser().isEnabled());
+        customersPackage.removeIf(customer -> !customer.getUser().isEnabled());
         model.addAttribute("package", pack);
         model.addAttribute("customersNew", customers);
         model.addAttribute("customers", customersPackage);
