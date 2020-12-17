@@ -34,7 +34,7 @@
                         title="to disable"
                         th:data-userid="${user.id}"
                         th:data-menu-active="${menuActive}"
-                        th:onclick="deleteUser(this.getAttribute('data-userid'), this.getAttribute('data-menu-active'))">
+                        th:onclick="enabledUser(this.getAttribute('data-userid'), this.getAttribute('data-menu-active'))">
                     <i class="fas fa-check"></i>
                 </button>
                 <button th:if="${user.user.enabled == false}"
@@ -42,7 +42,7 @@
                         title="enable"
                         th:data-userid="${user.id}"
                         th:data-menu-active="${menuActive}"
-                        th:onclick="deleteUser(this.getAttribute('data-userid'), this.getAttribute('data-menu-active'))">
+                        th:onclick="disabledUser(this.getAttribute('data-userid'), this.getAttribute('data-menu-active'))">
                     <i class="fas fa-times"></i>
                 </button>
             </td>
