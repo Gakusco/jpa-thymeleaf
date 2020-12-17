@@ -27,7 +27,7 @@ public class Staff {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birth;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="id_user")
     private User user;
 

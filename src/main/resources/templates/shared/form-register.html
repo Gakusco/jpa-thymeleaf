@@ -47,7 +47,7 @@
                th:errors="*{user.username}"
                class="text-danger"></small>
     </div>
-    <div class="form-group">
+    <div th:if="${usuario.id == null}" class="form-group">
         <label for="username" th:class="${#fields.hasErrors('user.password') ? 'text-danger' : ''}">Contraseña</label>
         <input th:field="*{user.password}"
                type="password"

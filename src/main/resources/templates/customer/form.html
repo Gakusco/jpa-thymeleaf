@@ -8,10 +8,10 @@
 <div th:replace="shared/menu :: navbar"></div>
     <div class="card m-4 bg-info text-white">
         <div class="card-header">
-            <h2>Registrar cliente</h2>
+            <h2 th:text="${title}"></h2>
         </div>
         <div class="card-body bg-white text-dark">
-            <form class="form" th:action="@{/customer/save}" th:object="${customer}" method="post">
+            <form class="form" th:action="@{/customer/} + ${customer.id == null ? 'save' : 'edit'}" th:object="${customer}" method="post">
                 <div th:replace="shared/form-register :: form-register(${customer})"></div>
                 <button type="submit" class="btn btn-outline-primary"><i class="fas fa-plus"></i> registrar</button>
                 <a class="btn btn-outline-secondary" th:href="@{/customer/list}"><i class="fas fa-long-arrow-alt-left"></i></a>

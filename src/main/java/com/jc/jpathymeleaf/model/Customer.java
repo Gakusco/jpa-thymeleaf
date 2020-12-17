@@ -38,7 +38,7 @@ public class Customer {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "customers")
     private List<Package> packages;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="id_user")
     private User user;
 

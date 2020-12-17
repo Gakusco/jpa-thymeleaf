@@ -9,6 +9,7 @@ import com.jc.jpathymeleaf.service.PackageService;
 import com.jc.jpathymeleaf.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -56,6 +58,7 @@ public class CustomerController {
 
     @GetMapping("/add")
     public String add(Model model){
+        model.addAttribute("title","Registrar cliente");
         model.addAttribute("customer", new Customer());
         model.addAttribute("menuActive", "customer");
         return "customer/form";
@@ -141,6 +144,26 @@ public class CustomerController {
     public String disable(Model model, @PathVariable String idCustomer){
         isEnabled(false, model, idCustomer);
         return "customer/list :: list-user";
+    }
+
+    @GetMapping("/edit/{idCustomer}")
+    public String editCustomer(@PathVariable String idCustomer, Model model) {
+        Optional<Customer> customer = customerService.findById(Integer.parseInt(idCustomer));
+        customer.ifPresent(c -> model.addAttribute("customer", c));
+        model.addAttribute("title","Editar cliente");
+        model.addAttribute("menuActive","customer");
+        return "customer/form";
+    }
+
+    @PostMapping("/edit")
+    public String edit(@Valid @ModelAttribute Customer customer, BindingResult result, RedirectAttributes redirectAttributes) {
+        userValidation.validate(customer, result);
+        if (result.hasErrors()){
+            return "customer/form";
+        }
+        customerService.save(customer);
+        redirectAttributes.addFlashAttribute("success", "El cliente a sido modificado");
+        return "redirect:/customer/list";
     }
 
     private void isEnabled(Boolean change, Model model, String idCustomer) {

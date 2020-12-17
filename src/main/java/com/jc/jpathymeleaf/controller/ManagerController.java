@@ -28,6 +28,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/manager")
+@SessionAttributes("staff")
 public class ManagerController {
 
     @Autowired
@@ -54,6 +55,7 @@ public class ManagerController {
 
     @GetMapping("/add")
     public String add(Model model){
+        model.addAttribute("title","Registrar gerente");
         model.addAttribute("staff", new Staff());
         model.addAttribute("menuActive", "manager");
         return "manager/form";
@@ -88,6 +90,28 @@ public class ManagerController {
     public String disable(Model model, @PathVariable String idManager){
         isEnabled(false, model, idManager);
         return "manager/list :: list-user";
+    }
+
+    @GetMapping("/edit/{idManager}")
+    public String editManager(@PathVariable String idManager, Model model) {
+        Optional<Staff> staff = staffService.findById(Integer.parseInt(idManager));
+        staff.ifPresent(s -> model.addAttribute("staff", s));
+        model.addAttribute("title","Editar gerente");
+        model.addAttribute("menuActive","manager");
+        return "manager/form";
+    }
+
+    @PostMapping("/edit")
+    public String edit(@Valid @ModelAttribute Staff staff, BindingResult result, RedirectAttributes redirectAttributes) {
+//        userValidation.validate(customer, result);
+        if (result.hasErrors()){
+            return "manager/form";
+        }
+        System.out.println("hola");
+        System.out.println(staff.getId());
+        staffService.save(staff);
+        redirectAttributes.addFlashAttribute("success", "El gerente a sido modificado");
+        return "redirect:/manager/list";
     }
 
     private void isEnabled(Boolean change, Model model, String idManager) {

@@ -10,6 +10,7 @@
                 <th scope="col" th:if="${menuActive == 'customer' or menuActive == 'manager'}" class="text-center">Habilitar/Deshabilitar</th>
                 <th th:if="${menuActive == 'customer'}" scope="col" class="text-center">Paquetes</th>
                 <th scope="col" th:if="${menuActive == 'package'}" class="text-center">Eliminar</th>
+                <th scope="col" th:if="${menuActive == 'customer' or menuActive == 'manager'}" class="text-center">Editar</th>
             </tr>
             </thead>
             <tbody th:each="user, iterador: ${users}">
@@ -38,7 +39,7 @@
                 </td>
                 <td th:if="${menuActive == 'customer'}" class="text-center">
                     <a th:if="${user.user.enabled}" class="btn btn-outline-success" th:href="@{'/customer/package/' + ${user.id}}"
-                       title="add packages">
+                       title="Agregar paquetes">
                         <i class="fas fa-plus"></i>
                     </a>
                     <button th:if="${not user.user.enabled}" class="btn btn-outline-dark disabled">
@@ -50,6 +51,16 @@
                        th:onclick="'deleteCustomer('+${package.id} + ',' + ${user.id}+')'" title="eliminar">
                         <i class="far fa-trash-alt"></i>
                     </a></td>
+                <td th:if="${menuActive == 'customer' or menuActive == 'manager'}" class="text-center">
+                    <a th:if="${user.user.enabled}" class="btn btn-outline-success"
+                       th:href="@{'/'+${menuActive}+'/edit/'+${user.id}}"
+                       th:title="'Editar '+${menuActive}">
+                        <i class="fas fa-user-edit"></i>
+                    </a>
+                    <button th:if="${not user.user.enabled}" class="btn btn-outline-dark disabled">
+                        <i class="fas fa-user-edit"></i>
+                    </button>
+                </td>
             </tr>
             </tbody>
         </table>
