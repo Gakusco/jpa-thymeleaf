@@ -8,9 +8,12 @@
             <th scope="col" class="text-center">#</th>
             <th scope="col">Nombre</th>
             <th scope="col">Descripción</th>
-            <th th:if="${customer == null}" class="text-center" scope="col">Habilitar/Deshabilitar</th>
-            <th scope="col" th:if="${customer}" class="text-center">Eliminar</th>
-            <th scope="col" th:if="${customer == null}" class="text-center">Clientes</th>
+            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_GERENTE')"
+                th:if="${customer == null}" class="text-center" scope="col">Habilitar/Deshabilitar</th>
+            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_AGENTE')"
+                scope="col" th:if="${customer}" class="text-center">Eliminar</th>
+            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')"
+                scope="col" th:if="${customer == null}" class="text-center">Clientes</th>
         </tr>
         </thead>
         <tbody th:each="package, iterador: ${packages}">
@@ -18,7 +21,8 @@
             <th scope="row" th:text="${(iterador.index + 1)}" class="text-center"></th>
             <td th:text="${package.name}"></td>
             <td th:text="${package.description}"></td>
-            <td th:if="${customer == null}" class="text-center">
+            <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_GERENTE')"
+                th:if="${customer == null}" class="text-center">
                 <button th:if="${package.enable == true}" class="btn btn-outline-success" title="deshabilitar" th:onclick="'disable('+${package.id}+')'">
                     <i class="fas fa-check"></i>
                 </button>
@@ -26,12 +30,14 @@
                     <i class="fas fa-times"></i>
                 </button>
             </td>
-            <td th:if="${customer}" class="text-center">
+            <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_AGENTE')"
+                th:if="${customer}" class="text-center">
                 <button class="btn btn-outline-danger" th:onclick="'deletePackage('+${package.id} + ',' + ${customer.id}+')'" title="eliminar paquete">
                     <i class="far fa-trash-alt"></i>
                 </button>
             </td>
-            <td th:if="${customer == null}" class="text-center">
+            <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')"
+                th:if="${customer == null}" class="text-center">
                 <a th:if="${package.enable}" class="btn btn-outline-success" th:href="@{'/package/customer/' + ${package.id}}" title="agregar clientes">
                     <i class="fas fa-plus"></i>
                 </a>

@@ -12,7 +12,8 @@
     <div class="card m-4 bg-info text-white">
         <div class="card-header">
             <h2 class="float-lg-left">Clientes</h2>
-            <a type="button" class="btn btn-outline-light float-lg-right" th:href="@{/customer/add}">Registrar</a>
+            <a sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_GERENTE')"
+               type="button" class="btn btn-outline-light float-lg-right" th:href="@{/customer/add}">Registrar</a>
         </div>
         <div th:id="list-user" th:fragment="list-user">
             <div th:replace="shared/list-users :: list-users(${customers}, null, ${menuActive})"></div>

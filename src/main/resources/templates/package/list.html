@@ -11,7 +11,8 @@
 <div class="card m-4 bg-info text-white">
     <div class="card-header">
         <h2 class="float-lg-left">Paquetes</h2>
-        <a type="button" class="btn btn-outline-light float-lg-right" th:href="@{/package/add}">Crear</a>
+        <a sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_GERENTE')"
+           type="button" class="btn btn-outline-light float-lg-right" th:href="@{/package/add}">Crear</a>
     </div>
     <div th:fragment="list-pack" th:id="list-pack">
         <div th:replace="shared/list-package :: list-package"></div>

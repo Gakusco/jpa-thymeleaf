@@ -5,7 +5,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <li sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')" th:class="${menuActive == 'customer' ? 'nav-item active' : 'nav-item'}">
+            <li sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_AGENTE')" th:class="${menuActive == 'customer' ? 'nav-item active' : 'nav-item'}">
                 <a class="nav-link" th:href="@{/customer/list}">Clientes</a>
             </li>
             <li sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')" th:class="${menuActive == 'manager' ? 'nav-item active' : 'nav-item'}">
@@ -17,7 +17,7 @@
             <li sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')" th:class="${menuActive == 'city' ? 'nav-item active' : 'nav-item'}">
                 <a class="nav-link" th:href="@{/city/list}">Ciudades</a>
             </li>
-            <li sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_GERENTE')" th:class="${menuActive == 'package' ? 'nav-item active' : 'nav-item'}">
+            <li th:class="${menuActive == 'package' ? 'nav-item active' : 'nav-item'}">
                 <a class="nav-link" th:href="@{/package/list}">Paquetes</a>
             </li>
         </ul>
