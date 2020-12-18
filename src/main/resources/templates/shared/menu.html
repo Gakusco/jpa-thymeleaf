@@ -14,6 +14,9 @@
             <li th:class="${menuActive == 'agent' ? 'nav-item active' : 'nav-item'}">
                 <a class="nav-link" th:href="@{/agent/list}">Agentes</a>
             </li>
+            <li th:class="${menuActive == 'city' ? 'nav-item active' : 'nav-item'}">
+                <a class="nav-link" th:href="@{/city/list}">Ciudades</a>
+            </li>
             <li th:class="${menuActive == 'package' ? 'nav-item active' : 'nav-item'}">
                 <a class="nav-link" th:href="@{/package/list}">Paquetes</a>
             </li>
