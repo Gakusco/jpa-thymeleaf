@@ -15,8 +15,7 @@ public class City {
     private String name;
 
     private String description;
-
-    @NotNull
+    
     @OneToMany(mappedBy = "city")
     private List<Package> packages;
 
