@@ -5,21 +5,26 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <li th:class="${menuActive == 'customer' ? 'nav-item active' : 'nav-item'}">
+            <li sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')" th:class="${menuActive == 'customer' ? 'nav-item active' : 'nav-item'}">
                 <a class="nav-link" th:href="@{/customer/list}">Clientes</a>
             </li>
-            <li th:class="${menuActive == 'manager' ? 'nav-item active' : 'nav-item'}">
+            <li sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')" th:class="${menuActive == 'manager' ? 'nav-item active' : 'nav-item'}">
                 <a class="nav-link" th:href="@{/manager/list}">Gerentes</a>
             </li>
-            <li th:class="${menuActive == 'agent' ? 'nav-item active' : 'nav-item'}">
+            <li sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')" th:class="${menuActive == 'agent' ? 'nav-item active' : 'nav-item'}">
                 <a class="nav-link" th:href="@{/agent/list}">Agentes</a>
             </li>
-            <li th:class="${menuActive == 'city' ? 'nav-item active' : 'nav-item'}">
+            <li sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')" th:class="${menuActive == 'city' ? 'nav-item active' : 'nav-item'}">
                 <a class="nav-link" th:href="@{/city/list}">Ciudades</a>
             </li>
-            <li th:class="${menuActive == 'package' ? 'nav-item active' : 'nav-item'}">
+            <li sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_GERENTE')" th:class="${menuActive == 'package' ? 'nav-item active' : 'nav-item'}">
                 <a class="nav-link" th:href="@{/package/list}">Paquetes</a>
             </li>
         </ul>
     </div>
+    <ul class="navbar-nav d-flex">
+        <li>
+            <a class="nav-link" th:href="@{/login?logout}">Cerrar sesión</a>
+        </li>
+    </ul>
 </nav>
