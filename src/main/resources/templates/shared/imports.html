@@ -131,3 +131,19 @@
             /*]]>*/
         </script>
     </div>
+    <div th:fragment="js-pagination">
+        <script th:inline="javascript" type="text/javascript">
+            /*<![CDATA[*/
+
+            $(document).ready(function() {
+                $('#table-list-paginator').pageMe({
+                    pagerSelector: '#pagination-bar',
+                    showPrevNext: true,
+                    hidePageNumbers: false,
+                    perPage: 3
+                });
+            });
+
+            /*]]>*/
+        </script>
+    </div>
