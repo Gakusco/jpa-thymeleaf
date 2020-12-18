@@ -131,16 +131,16 @@
             /*]]>*/
         </script>
     </div>
-    <div th:fragment="js-pagination">
+    <div th:fragment="js-search">
         <script th:inline="javascript" type="text/javascript">
             /*<![CDATA[*/
 
-            $(document).ready(function() {
-                $('#table-list-paginator').pageMe({
-                    pagerSelector: '#pagination-bar',
-                    showPrevNext: true,
-                    hidePageNumbers: false,
-                    perPage: 3
+            $(document).ready(function(){
+                $("#input-search").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#table-search .body-table").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
                 });
             });
 
