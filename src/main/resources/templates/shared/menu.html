@@ -24,7 +24,10 @@
     </div>
     <ul class="navbar-nav d-flex">
         <li>
-            <a class="nav-link" th:href="@{/login?logout}">Cerrar sesión</a>
+            <a th:if="${login == 'login'}" class="nav-link" th:href="@{/login}">Iniciar sesión</a>
+        </li>
+        <li>
+            <a th:if="${login != 'login'}" class="nav-link" th:href="@{/logout}">Cerrar sesión</a>
         </li>
     </ul>
 </nav>

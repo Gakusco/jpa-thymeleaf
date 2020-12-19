@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +31,10 @@ public class PackageController {
     CityService cityService;
 
     @GetMapping("/list")
-    public String list(Model model){
+    public String list(HttpServletRequest request, Model model){
+        if (request.getUserPrincipal() == null){
+            model.addAttribute("login","login");
+        }
         model.addAttribute("packages", packageService.findAll());
         model.addAttribute("menuActive", "package");
         return "package/list";
