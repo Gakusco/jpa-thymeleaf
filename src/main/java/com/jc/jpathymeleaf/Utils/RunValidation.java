@@ -1,33 +1,7 @@
-package com.jc.jpathymeleaf.Validations;
+package com.jc.jpathymeleaf.Utils;
 
-
-import com.jc.jpathymeleaf.model.Customer;
-import org.springframework.stereotype.Component;
-import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
-import org.springframework.validation.Validator;
-
-import java.util.List;
-
-@Component
-public class UserValidation implements Validator {
-    @Override
-    public boolean supports(Class<?> aClass) {
-        return Customer.class.isAssignableFrom(aClass);
-    }
-
-    @Override
-    public void validate(Object o, Errors errors) {
-        Customer customer = (Customer) o;
-
-        ValidationUtils.rejectIfEmpty(errors, "run", null, "Debe ingresar su run");
-
-        if(!validateRun(customer.getRun())){
-            errors.rejectValue("run", null, "El run no es valido");
-        }
-    }
-
-    private boolean validateRun(String run) {
+public class RunValidation {
+    public static boolean validateRun(String run) {
         if (run.contains(".")){
             return false;
         } else {
@@ -70,12 +44,10 @@ public class UserValidation implements Validator {
         return false;
     }
 
-    private boolean onlyNumber(String s) {
+    public static boolean onlyNumber(String s) {
         for (int i = 0; i<s.length();i++) {
             if (s.charAt(i) < '0' || s.charAt(i) > '9') return false;
         }
         return true;
     }
-
-
 }

@@ -1,6 +1,6 @@
 package com.jc.jpathymeleaf.controller;
 
-import com.jc.jpathymeleaf.Validations.UserValidation;
+import com.jc.jpathymeleaf.Validations.CustomerValidation;
 import com.jc.jpathymeleaf.model.*;
 import com.jc.jpathymeleaf.model.Package;
 import com.jc.jpathymeleaf.service.*;
@@ -42,7 +42,7 @@ public class CustomerController {
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    UserValidation userValidation;
+    CustomerValidation customerValidation;
 
     @GetMapping("/list")
     public String listar(Model model){
@@ -69,8 +69,10 @@ public class CustomerController {
 
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute Customer customer, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        userValidation.validate(customer, result);
+        customerValidation.validate(customer, result);
          if (result.hasErrors()){
+             model.addAttribute("title","Registrar cliente");
+             model.addAttribute("menuActive", "customer");
             return "customer/form";
         }
         customer.getUser().setPassword(bCryptPasswordEncoder.encode(customer.getUser().getPassword()));
@@ -159,9 +161,11 @@ public class CustomerController {
     }
 
     @PostMapping("/edit")
-    public String edit(@Valid @ModelAttribute Customer customer, BindingResult result, RedirectAttributes redirectAttributes) {
-        userValidation.validate(customer, result);
+    public String edit(@Valid @ModelAttribute Customer customer, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
+        customerValidation.validate(customer, result);
         if (result.hasErrors()){
+            model.addAttribute("title","Editar cliente");
+            model.addAttribute("menuActive","customer");
             return "customer/form";
         }
         customerService.save(customer);
