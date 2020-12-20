@@ -9,10 +9,10 @@
       <div th:replace="shared/menu :: navbar"></div>
       <div class="card m-4">
           <div class="card-header bg-info text-white">
-              <h2>Crear paquete</h2>
+              <h2 th:text="${title}"></h2>
           </div>
           <div class="card-body bg-white">
-              <form class="form" th:action="@{/package/save}" th:object="${package}" method="post">
+              <form class="form" th:action="@{/package/} + ${package.id == null ? 'save' : 'edit'}" th:object="${package}" method="post">
                   <div class="form-group">
                       <label for="city" th:class="${#fields.hasErrors('city') ? 'text-danger' : ''}">Ciudad</label>
                       <select th:field="*{city}"
@@ -51,7 +51,7 @@
                              th:errors="*{description}"
                              class="text-danger"></small>
                   </div>
-                  <button type="submit" class="btn btn-outline-primary"><i class="fas fa-plus"></i> crear</button>
+                  <button type="submit" class="btn btn-outline-primary"><i class="fas fa-plus" th:text=" ${action}"></i></button>
                   <a class="btn btn-outline-secondary" th:href="@{/package/list}"><i class="fas fa-long-arrow-alt-left"></i></a>
               </form>
           </div>

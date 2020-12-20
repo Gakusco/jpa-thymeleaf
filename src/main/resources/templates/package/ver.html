@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="shared/head :: head">
+    <meta charset="UTF-8">
+    <title>Paquetes</title>
+</head>
+<body>
+<div th:replace="shared/imports :: alerts"></div>
+<div th:replace="shared/menu :: navbar"></div>
+<div class="card m-4 bg-info text-white">
+    <div class="card-header">
+        <h2 class="float-lg-left" th:text="${package.name}"></h2>
+        <a class="btn btn-outline-light float-right" th:href="@{/package/list}"><i class="fas fa-long-arrow-alt-left"> Regresar</i></a>
+    </div>
+    <div class="card-body bg-white text-black-50">
+        <div class="card mb-3" style="max-width: 2000px;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img class="w-100" th:src="@{/image/img.png}" alt="img.png">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <p class="card-text" th:text="${package.description}"></p>
+                        <p class="card-text">Ciudad: <small class="text-muted" th:text="${package.city.name}"></small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="shared/imports :: jquery"></div>
+<div th:replace="shared/imports :: js-package"></div>
+<div th:replace="shared/imports :: js-alerts"></div>
+<div th:replace="shared/imports :: js-search"></div>
+</body>
+</html>

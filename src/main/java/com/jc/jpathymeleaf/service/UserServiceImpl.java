@@ -73,4 +73,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public List<User> findByAuthoritiesAuthority(String authority) {
         return userRepository.findByAuthoritiesAuthority(authority);
     }
+
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 }

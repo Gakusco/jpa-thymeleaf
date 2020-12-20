@@ -3,27 +3,18 @@ package com.jc.jpathymeleaf.controller;
 import com.jc.jpathymeleaf.Validations.UserValidation;
 import com.jc.jpathymeleaf.model.*;
 import com.jc.jpathymeleaf.model.Package;
-import com.jc.jpathymeleaf.service.AuthorityService;
-import com.jc.jpathymeleaf.service.CustomerService;
-import com.jc.jpathymeleaf.service.PackageService;
-import com.jc.jpathymeleaf.service.UserService;
+import com.jc.jpathymeleaf.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.persistence.criteria.CriteriaBuilder;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +36,9 @@ public class CustomerController {
     AuthorityService authorityService;
 
     @Autowired
+    StaffService staffService;
+
+    @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
@@ -54,6 +48,15 @@ public class CustomerController {
     public String listar(Model model){
         reloadListCustomer(model);
         return "customer/list";
+    }
+
+    @GetMapping("/mis-paquetes")
+    public String misPaquetes(HttpServletRequest request, Model model){
+        User user = userService.findByUsername(request.getUserPrincipal().getName());
+        Optional<Customer> customerOptional = customerService.findById(user.getId());
+        customerOptional.ifPresent(customer -> refreshAddPackage(model, customer));
+        model.addAttribute("menuActive","customer");
+        return "customer/add-package";
     }
 
     @GetMapping("/add")

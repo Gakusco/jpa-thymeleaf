@@ -19,6 +19,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/package")
+@SessionAttributes("package")
 public class PackageController {
 
     @Autowired
@@ -44,6 +45,8 @@ public class PackageController {
     public String add(Model model){
         model.addAttribute("package", new Package());
         model.addAttribute("cities", cityService.findAll());
+        model.addAttribute("title","Crear paquete");
+        model.addAttribute("action","Crear");
         model.addAttribute("menuActive", "package");
         return "package/form";
     }
@@ -59,6 +62,37 @@ public class PackageController {
         packageService.save(pack);
         model.addAttribute("menuActive", "package");
         redirectAttributes.addFlashAttribute("success", "El paquete ha sido creado");
+        return "redirect:/package/list";
+    }
+
+    @GetMapping("/edit/{idPackage}")
+    public String editPackage(@PathVariable String idPackage, Model model){
+        Optional<Package> pack = packageService.findById(Integer.parseInt(idPackage));
+        pack.ifPresent(p -> model.addAttribute("package", p));
+        model.addAttribute("cities", cityService.findAll());
+        model.addAttribute("title","Editar paquete");
+        model.addAttribute("action","Guardar");
+        return "package/form";
+    }
+
+    @GetMapping("/ver/{idPackage}")
+    public String verPackage(@PathVariable String idPackage, Model model, HttpServletRequest request){
+        Optional<Package> pack = packageService.findById(Integer.parseInt(idPackage));
+        pack.ifPresent(p -> model.addAttribute("package", p));
+        if (request.getUserPrincipal() == null){
+            model.addAttribute("login","login");
+        }
+        model.addAttribute("menuActive","package");
+        return "package/ver";
+    }
+
+    @PostMapping("/edit")
+    public String edit(@Valid @ModelAttribute Package pack,BindingResult result,Model model, RedirectAttributes redirectAttributes){
+        if(result.hasErrors()){
+            return "package/form";
+        }
+        packageService.save(pack);
+        redirectAttributes.addFlashAttribute("success","El paquete ha sido editado");
         return "redirect:/package/list";
     }
 

@@ -8,6 +8,9 @@
             <li sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_AGENTE')" th:class="${menuActive == 'customer' ? 'nav-item active' : 'nav-item'}">
                 <a class="nav-link" th:href="@{/customer/list}">Clientes</a>
             </li>
+            <li sec:authorize="hasAnyRole('ROLE_CLIENTE')" th:class="${menuActive == 'customer' ? 'nav-item active' : 'nav-item'}">
+                <a class="nav-link" th:href="@{/customer/mis-paquetes}">Mis paquetes</a>
+            </li>
             <li sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')" th:class="${menuActive == 'manager' ? 'nav-item active' : 'nav-item'}">
                 <a class="nav-link" th:href="@{/manager/list}">Gerentes</a>
             </li>
