@@ -35,9 +35,11 @@ public class PackageController {
     public String list(HttpServletRequest request, Model model){
         if (request.getUserPrincipal() == null){
             model.addAttribute("login","login");
+            model.addAttribute("register", "register");
+        } else {
+            model.addAttribute("menuActive", "package");
         }
         model.addAttribute("packages", packageService.findAll());
-        model.addAttribute("menuActive", "package");
         return "package/list";
     }
 

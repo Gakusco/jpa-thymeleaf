@@ -70,19 +70,14 @@ public class CustomerController {
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute Customer customer, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         customerValidation.validate(customer, result);
-         if (result.hasErrors()){
+        User userFound = userService.findByUsername(customer.getUser().getUsername());
+        if (result.hasErrors() || userFound != null){
+            model.addAttribute("userFound",userFound);
              model.addAttribute("title","Registrar cliente");
              model.addAttribute("menuActive", "customer");
             return "customer/form";
         }
-        customer.getUser().setPassword(bCryptPasswordEncoder.encode(customer.getUser().getPassword()));
-        customer.getUser().setEnabled(true);
-        User user = userService.save(customer.getUser());
-        customer.setUser(user);
-        Authority authority = new Authority("ROLE_CLIENTE");
-        authority.setUser(user);
-        authorityService.save(authority);
-        customerService.save(customer);
+        IndexController.saveUser(customer, bCryptPasswordEncoder, userService, authorityService, customerService);
         model.addAttribute("menuActive", "customer");
         redirectAttributes.addFlashAttribute("success", "El cliente ha sido registrado");
         return "redirect:/customer/list";

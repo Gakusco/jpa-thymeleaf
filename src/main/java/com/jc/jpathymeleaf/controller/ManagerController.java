@@ -62,7 +62,9 @@ public class ManagerController {
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute Staff staff, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
          staffValidation.validate(staff, result);
-        if (result.hasErrors()){
+        User userFound = userService.findByUsername(staff.getUser().getUsername());
+        if (result.hasErrors() || userFound != null){
+            model.addAttribute("userFound",userFound);
             model.addAttribute("title","Registrar gerente");
             model.addAttribute("menuActive", "manager");
             return "manager/form";
@@ -74,6 +76,7 @@ public class ManagerController {
         Authority authority = new Authority("ROLE_GERENTE");
         authority.setUser(user);
         authorityService.save(authority);
+        staff.setId(user.getId());
         staffService.save(staff);
         model.addAttribute("menuActive", "manager");
         redirectAttributes.addFlashAttribute("success", "El gerente ha sido registrado");

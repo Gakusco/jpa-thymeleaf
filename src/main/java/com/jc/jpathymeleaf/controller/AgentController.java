@@ -62,7 +62,9 @@ public class AgentController {
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute Staff staff, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
          staffValidation.validate(staff, result);
-        if (result.hasErrors()){
+        User userFound = userService.findByUsername(staff.getUser().getUsername());
+        if (result.hasErrors() || userFound != null){
+            model.addAttribute("userFound",userFound);
             model.addAttribute("title","Registrar agente");
             model.addAttribute("menuActive", "agent");
             return "agent/form";
@@ -74,6 +76,7 @@ public class AgentController {
         Authority authority = new Authority("ROLE_AGENTE");
         authority.setUser(user);
         authorityService.save(authority);
+        staff.setId(user.getId());
         staffService.save(staff);
         model.addAttribute("menuActive", "agent");
         redirectAttributes.addFlashAttribute("success", "El agente ha sido registrado");

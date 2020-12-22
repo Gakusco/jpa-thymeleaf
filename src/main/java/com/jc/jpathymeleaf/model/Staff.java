@@ -3,6 +3,7 @@ package com.jc.jpathymeleaf.model;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
@@ -14,7 +15,6 @@ import java.util.Date;
 public class Staff {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private int id;
 
@@ -28,6 +28,7 @@ public class Staff {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birth;
 
+    @Valid
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="id")
     private User user;

@@ -23,20 +23,16 @@ INSERT INTO authorities (authority, id_user) VALUES ('ROLE_GERENTE', 5);
 
 INSERT INTO authorities (authority, id_user) VALUES ('ROLE_ADMINISTRADOR', 6);
 
-INSERT INTO customers (birth, name, run) VALUES ('1992-11-25', 'Juan Carlos', '19414979-4');
-INSERT INTO customers (birth, name, run) VALUES ('1992-11-20', 'Danixa Fuentes', '19300979-4');
-INSERT INTO customers (birth, name, run) VALUES ('1992-11-21', 'Catalina Ruiz', '19411100-4');
+INSERT INTO customers (id,birth, name, run) VALUES (1,'1992-11-25', 'Juan Carlos', '19414979-4');
+INSERT INTO customers (id,birth, name, run) VALUES (2,'1992-11-20', 'Danixa Fuentes', '19300979-4');
+INSERT INTO customers (id,birth, name, run) VALUES (3,'1992-11-21', 'Catalina Ruiz', '19411100-4');
 
-INSERT INTO staff (birth, name, run) VALUES ('1992-11-25', 'Merlin', '19414979-4');
-INSERT INTO staff (birth, name, run) VALUES ('1992-11-20', 'Martin', '19300979-4');
-INSERT INTO staff (birth, name, run) VALUES ('1992-11-21', 'Paz', '19411100-4');
+INSERT INTO staff (id,birth, name, run) VALUES (4,'1992-11-25', 'Merlin', '19414979-4');
+INSERT INTO staff (id,birth, name, run) VALUES (5,'1992-11-20', 'Martin', '19300979-4');
+INSERT INTO staff (id,birth, name, run) VALUES (6,'1992-11-21', 'Paz', '19411100-4');
 
-INSERT INTO staff (birth, name, run) VALUES ('1992-11-25', 'Merlin', '19414979-4');
-INSERT INTO staff (birth, name, run) VALUES ('1992-11-20', 'Martin', '19300979-4');
-INSERT INTO staff (birth, name, run) VALUES ('1992-11-21', 'Paz', '19411100-4');
-
-INSERT INTO staff (birth, name, run) VALUES ('1992-11-20', 'Maxtil', '19300979-4');
-INSERT INTO staff (birth, name, run) VALUES ('1992-11-21', 'Esteban', '19411100-4');
+INSERT INTO staff (id,birth, name, run) VALUES (7,'1992-11-20', 'Maxtil', '19300979-4');
+INSERT INTO staff (id,birth, name, run) VALUES (8,'1992-11-21', 'Esteban', '19411100-4');
 
 INSERT INTO cities (id, description, name) VALUES (1, 'Lugar calido', 'Pucon');
 INSERT INTO cities (id, description, name) VALUES (2, 'Lugar frio', 'Las Trancas');

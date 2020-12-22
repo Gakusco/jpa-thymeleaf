@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="shared/head :: head">
     <meta charset="UTF-8">
-    <title>Registrar gerente</title>
+    <title>Registro</title>
 </head>
 <body>
 <div th:replace="shared/menu :: navbar"></div>
@@ -12,10 +12,10 @@
         <h2 th:text="${title}"></h2>
     </div>
     <div class="card-body bg-white text-dark">
-        <form class="form" th:action="@{/agent/} + ${staff.id == 0 ? 'save':'edit'}" th:object="${staff}" method="post">
-            <div th:replace="shared/form-register :: form-register(${staff},${userFound})"></div>
+        <form class="form" th:action="@{/register/save}" th:object="${customer}" method="post">
+            <div th:replace="shared/form-register :: form-register(${customer},${userFound})"></div>
             <button type="submit" class="btn btn-outline-primary"><i class="fas fa-plus"></i> registrar</button>
-            <a class="btn btn-outline-secondary" th:href="@{/agent/list}"><i class="fas fa-long-arrow-alt-left"></i></a>
+            <a class="btn btn-outline-secondary" th:href="@{/customer/list}"><i class="fas fa-long-arrow-alt-left"></i></a>
         </form>
     </div>
 </div>

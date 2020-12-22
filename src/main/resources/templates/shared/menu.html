@@ -26,8 +26,8 @@
         </ul>
     </div>
     <ul class="navbar-nav d-flex">
-        <li>
-            <a th:if="${menuActive == 'register'}" class="nav-link" th:href="@{/register}">Registrarse</a>
+        <li th:class="${menuActive == 'register' ? 'nav-item active' : 'nav-item'}">
+            <a th:if="${register == 'register'}" class="nav-link" th:href="@{/register}">Registrarse</a>
         </li>
         <li>
             <a th:if="${login == 'login'}" class="nav-link" th:href="@{/login}">Iniciar sesión</a>

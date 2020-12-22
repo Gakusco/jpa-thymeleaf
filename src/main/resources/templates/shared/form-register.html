@@ -1,4 +1,4 @@
-<div th:fragment="form-register(usuario)">
+<div th:fragment="form-register(usuario,userFound)">
     <div class="form-group">
         <label for="name" th:class="${#fields.hasErrors('name') ? 'text-danger' : ''}">Nombre</label>
         <input th:field="*{name}"
@@ -41,11 +41,13 @@
                type="text"
                id="username"
                placeholder="Gakusco"
-               th:class="${not #strings.isEmpty(usuario.user.username) && not #fields.hasErrors('user.username') ? 'form-control is-valid' : 'form-control'}"
+               th:class="${not #strings.isEmpty(usuario.user.username) && not #fields.hasErrors('user.username') && #strings.isEmpty(userFound) ? 'form-control is-valid' : 'form-control'}"
                th:errorClass="is-invalid">
         <small th:if="${#fields.hasErrors('user.username')}"
                th:errors="*{user.username}"
                class="text-danger"></small>
+        <small th:if="${not #strings.isEmpty(userFound)}"
+               class="text-danger">El usuario ya existe</small>
     </div>
     <div th:if="${usuario.id == 0}" class="form-group">
         <label for="username" th:class="${#fields.hasErrors('user.password') ? 'text-danger' : ''}">Contraseña</label>
