@@ -1,6 +1,7 @@
 package com.jc.jpathymeleaf.controller;
 
-import com.jc.jpathymeleaf.Validations.UserValidation;
+import com.jc.jpathymeleaf.Validations.CustomerValidation;
+import com.jc.jpathymeleaf.Validations.StaffValidation;
 import com.jc.jpathymeleaf.model.Authority;
 import com.jc.jpathymeleaf.model.Staff;
 import com.jc.jpathymeleaf.model.User;
@@ -32,7 +33,10 @@ public class AgentController {
     private UserService userService;
 
     @Autowired
-    UserValidation userValidation;
+    CustomerValidation customerValidation;
+
+    @Autowired
+    StaffValidation staffValidation;
 
     @Autowired
     AuthorityService authorityService;
@@ -57,8 +61,10 @@ public class AgentController {
 
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute Staff staff, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        // userValidation.validate(staff, result);
+         staffValidation.validate(staff, result);
         if (result.hasErrors()){
+            model.addAttribute("title","Registrar agente");
+            model.addAttribute("menuActive", "agent");
             return "agent/form";
         }
         staff.getUser().setPassword(bCryptPasswordEncoder.encode(staff.getUser().getPassword()));
@@ -96,9 +102,11 @@ public class AgentController {
     }
 
     @PostMapping("/edit")
-    public String edit(@Valid @ModelAttribute Staff staff, BindingResult result, RedirectAttributes redirectAttributes) {
-//        userValidation.validate(customer, result);
+    public String edit(@Valid @ModelAttribute Staff staff, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
+        staffValidation.validate(staff, result);
         if (result.hasErrors()){
+            model.addAttribute("title","Editar agente");
+            model.addAttribute("menuActive","agent");
             return "agent/form";
         }
         System.out.println(staff.getId());

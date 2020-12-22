@@ -1,28 +1,23 @@
 package com.jc.jpathymeleaf.controller;
 
-import com.jc.jpathymeleaf.Validations.UserValidation;
+import com.jc.jpathymeleaf.Validations.CustomerValidation;
+import com.jc.jpathymeleaf.Validations.StaffValidation;
 import com.jc.jpathymeleaf.model.Authority;
-import com.jc.jpathymeleaf.model.Customer;
-import com.jc.jpathymeleaf.model.Package;
 import com.jc.jpathymeleaf.model.Staff;
 import com.jc.jpathymeleaf.model.User;
 import com.jc.jpathymeleaf.service.AuthorityService;
 import com.jc.jpathymeleaf.service.StaffService;
 import com.jc.jpathymeleaf.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +33,10 @@ public class ManagerController {
     private UserService userService;
 
     @Autowired
-    UserValidation userValidation;
+    CustomerValidation customerValidation;
+
+    @Autowired
+    StaffValidation staffValidation;
 
     @Autowired
     AuthorityService authorityService;
@@ -63,8 +61,10 @@ public class ManagerController {
 
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute Staff staff, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        // userValidation.validate(staff, result);
+         staffValidation.validate(staff, result);
         if (result.hasErrors()){
+            model.addAttribute("title","Registrar gerente");
+            model.addAttribute("menuActive", "manager");
             return "manager/form";
         }
         staff.getUser().setPassword(bCryptPasswordEncoder.encode(staff.getUser().getPassword()));
@@ -102,9 +102,11 @@ public class ManagerController {
     }
 
     @PostMapping("/edit")
-    public String edit(@Valid @ModelAttribute Staff staff, BindingResult result, RedirectAttributes redirectAttributes) {
-//        userValidation.validate(customer, result);
+    public String edit(@Valid @ModelAttribute Staff staff, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
+        staffValidation.validate(staff, result);
         if (result.hasErrors()){
+            model.addAttribute("title","Editar gerente");
+            model.addAttribute("menuActive","manager");
             return "manager/form";
         }
         staffService.save(staff);
