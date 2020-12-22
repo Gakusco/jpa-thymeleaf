@@ -25,10 +25,10 @@
 					</select>
 
 				</div>
-					<button th:if="${#lists.size(packagesNew)>0}" class="btn btn-outline-primary mr-1" title="add package" th:onclick="'addPackage('+ ${customer.id} +')'">
+					<button th:if="${#lists.size(packagesNew)>0}" class="btn btn-outline-primary mr-1" title="añadir paquete" th:onclick="'addPackage('+ ${customer.id} +')'">
 						<i class="fas fa-plus"></i>
 					</button>
-					<a class="btn btn-outline-secondary" th:href="@{/customer/list}" title="return">
+					<a sec:authorize="hasAnyRole('ROLE_AGENTE','ROLE_ADMINISTRADOR')" class="btn btn-outline-secondary" th:href="@{/customer/list}" title="regresar">
 						<i class="fas fa-long-arrow-alt-left"></i>
 					</a>
 				</div>
