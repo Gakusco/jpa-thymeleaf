@@ -23,16 +23,20 @@ INSERT INTO authorities (authority, id_user) VALUES ('ROLE_GERENTE', 5);
 
 INSERT INTO authorities (authority, id_user) VALUES ('ROLE_ADMINISTRADOR', 6);
 
-INSERT INTO customers (birth, name, run, id_user) VALUES ('1992-11-25', 'Juan Carlos', '19414979-4',1);
-INSERT INTO customers (birth, name, run, id_user) VALUES ('1992-11-20', 'Danixa Fuentes', '19300979-4',2);
-INSERT INTO customers (birth, name, run, id_user) VALUES ('1992-11-21', 'Catalina Ruiz', '19411100-4',3);
+INSERT INTO customers (birth, name, run) VALUES ('1992-11-25', 'Juan Carlos', '19414979-4');
+INSERT INTO customers (birth, name, run) VALUES ('1992-11-20', 'Danixa Fuentes', '19300979-4');
+INSERT INTO customers (birth, name, run) VALUES ('1992-11-21', 'Catalina Ruiz', '19411100-4');
 
-INSERT INTO staff (birth, name, run, id_user) VALUES ('1992-11-25', 'Merlin', '19414979-4',4);
-INSERT INTO staff (birth, name, run, id_user) VALUES ('1992-11-20', 'Martin', '19300979-4',5);
-INSERT INTO staff (birth, name, run, id_user) VALUES ('1992-11-21', 'Paz', '19411100-4',6);
+INSERT INTO staff (birth, name, run) VALUES ('1992-11-25', 'Merlin', '19414979-4');
+INSERT INTO staff (birth, name, run) VALUES ('1992-11-20', 'Martin', '19300979-4');
+INSERT INTO staff (birth, name, run) VALUES ('1992-11-21', 'Paz', '19411100-4');
 
-INSERT INTO staff (birth, name, run, id_user) VALUES ('1992-11-20', 'Maxtil', '19300979-4',7);
-INSERT INTO staff (birth, name, run, id_user) VALUES ('1992-11-21', 'Esteban', '19411100-4',8);
+INSERT INTO staff (birth, name, run) VALUES ('1992-11-25', 'Merlin', '19414979-4');
+INSERT INTO staff (birth, name, run) VALUES ('1992-11-20', 'Martin', '19300979-4');
+INSERT INTO staff (birth, name, run) VALUES ('1992-11-21', 'Paz', '19411100-4');
+
+INSERT INTO staff (birth, name, run) VALUES ('1992-11-20', 'Maxtil', '19300979-4');
+INSERT INTO staff (birth, name, run) VALUES ('1992-11-21', 'Esteban', '19411100-4');
 
 INSERT INTO cities (id, description, name) VALUES (1, 'Lugar calido', 'Pucon');
 INSERT INTO cities (id, description, name) VALUES (2, 'Lugar frio', 'Las Trancas');

@@ -9,6 +9,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="id")
     private int id;
 
     private String username;
@@ -17,14 +18,14 @@ public class User {
 
     private boolean enabled;
 
-    @OneToMany(mappedBy="user")
-    private List<Customer> customers;
-
-    @OneToMany(mappedBy = "user")
-    private List<Staff> staff;
-
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Authority> authorities;
+
+    @OneToOne(mappedBy = "user")
+    private Customer customer;
+
+    @OneToOne(mappedBy = "user")
+    private Staff staff;
 
     public User() {
     }
@@ -53,14 +54,6 @@ public class User {
         this.password = password;
     }
 
-    public List<Customer> getCustomers() {
-        return customers;
-    }
-
-    public void setCustomers(List<Customer> customers) {
-        this.customers = customers;
-    }
-
     public boolean isEnabled() {
         return enabled;
     }
@@ -69,13 +62,6 @@ public class User {
         this.enabled = enabled;
     }
 
-    public List<Staff> getStaff() {
-        return staff;
-    }
-
-    public void setStaff(List<Staff> staff) {
-        this.staff = staff;
-    }
 
     public List<Authority> getAuthorities() {
         return authorities;
@@ -83,5 +69,21 @@ public class User {
 
     public void setAuthorities(List<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Staff getStaff() {
+        return staff;
+    }
+
+    public void setStaff(Staff staff) {
+        this.staff = staff;
     }
 }
