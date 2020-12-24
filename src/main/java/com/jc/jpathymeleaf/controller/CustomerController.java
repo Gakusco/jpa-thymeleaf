@@ -175,7 +175,7 @@ public class CustomerController {
             return "customer/form";
         }
         customerService.save(customer);
-        redirectAttributes.addFlashAttribute("success", "El cliente a sido modificado");
+        redirectAttributes.addFlashAttribute("success", "El cliente ha sido modificado");
         return "redirect:/customer/list";
     }
 

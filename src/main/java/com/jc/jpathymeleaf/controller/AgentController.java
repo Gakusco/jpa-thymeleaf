@@ -118,7 +118,7 @@ public class AgentController {
         }
         System.out.println(staff.getId());
         staffService.save(staff);
-        redirectAttributes.addFlashAttribute("success", "El agente a sido modificado");
+        redirectAttributes.addFlashAttribute("success", "El agente ha sido modificado");
         return "redirect:/agent/list";
     }
 
