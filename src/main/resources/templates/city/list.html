@@ -24,6 +24,7 @@
                     <th scope="col" class="text-center">#</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Descripción</th>
+                    <th scope="col">Editar</th>
                 </tr>
                 </thead>
                 <tbody th:each="city, iterador: ${cities}">
@@ -31,6 +32,11 @@
                     <th scope="row" th:text="${(iterador.index + 1)}" class="text-center"></th>
                     <td th:text="${city.name}"></td>
                     <td th:text="${city.description}"></td>
+                    <td>
+                         <a class="btn btn-outline-success" th:href="@{'/city/edit/' + ${city.id}}" title="editar ciudad">
+                             <i class="fas fa-edit"></i>
+                         </a>
+                     </td>
                 </tr>
                 </tbody>
             </table>

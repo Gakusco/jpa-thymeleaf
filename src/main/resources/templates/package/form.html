@@ -12,7 +12,7 @@
               <h2 th:text="${title}"></h2>
           </div>
           <div class="card-body bg-white">
-              <form class="form" th:action="@{/package/} + ${package.id == null ? 'save' : 'edit'}" th:object="${package}" method="post">
+              <form class="form" th:action="@{/package/} + ${package.id == 0 ? 'save' : 'edit'}" th:object="${package}" method="post">
                   <div class="form-group">
                       <label for="city" th:class="${#fields.hasErrors('city') ? 'text-danger' : ''}">Ciudad</label>
                       <select th:field="*{city}"
@@ -39,6 +39,17 @@
                       <small th:if="${#fields.hasErrors('name')}"
                             th:errors="*{name}"
                             class="text-danger"></small>
+                  </div>
+                  <div class="form-group">
+                      <label for="image" th:class="${#fields.hasErrors('image') ? 'text-danger' : ''}">Link imagen</label>
+                      <input th:field="*{image}"
+                             type="text"
+                             id="image"
+                             th:class="${not #strings.isEmpty(package.image) && not #fields.hasErrors('image') ? 'form-control is-valid' : 'form-control'}"
+                             th:errorClass="is-invalid">
+                      <small th:if="${#fields.hasErrors('image')}"
+                             th:errors="*{image}"
+                             class="text-danger"></small>
                   </div>
                   <div class="form-group">
                       <label for="description" th:class="${#fields.hasErrors('description') ? 'text-danger' : ''}">Descripción</label>

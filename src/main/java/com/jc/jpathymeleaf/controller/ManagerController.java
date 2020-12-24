@@ -56,6 +56,7 @@ public class ManagerController {
         model.addAttribute("title","Registrar gerente");
         model.addAttribute("staff", new Staff());
         model.addAttribute("menuActive", "manager");
+        model.addAttribute("action", "Registar");
         return "manager/form";
     }
 
@@ -67,6 +68,7 @@ public class ManagerController {
             model.addAttribute("userFound",userFound);
             model.addAttribute("title","Registrar gerente");
             model.addAttribute("menuActive", "manager");
+            model.addAttribute("action", "Registar");
             return "manager/form";
         }
         staff.getUser().setPassword(bCryptPasswordEncoder.encode(staff.getUser().getPassword()));
@@ -101,6 +103,7 @@ public class ManagerController {
         staff.ifPresent(s -> model.addAttribute("staff", s));
         model.addAttribute("title","Editar gerente");
         model.addAttribute("menuActive","manager");
+        model.addAttribute("action", "Guardar");
         return "manager/form";
     }
 
@@ -110,6 +113,7 @@ public class ManagerController {
         if (result.hasErrors()){
             model.addAttribute("title","Editar gerente");
             model.addAttribute("menuActive","manager");
+            model.addAttribute("action", "Guardar");
             return "manager/form";
         }
         staffService.save(staff);

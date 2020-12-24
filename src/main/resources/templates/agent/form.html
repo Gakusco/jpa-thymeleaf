@@ -14,7 +14,7 @@
     <div class="card-body bg-white text-dark">
         <form class="form" th:action="@{/agent/} + ${staff.id == 0 ? 'save':'edit'}" th:object="${staff}" method="post">
             <div th:replace="shared/form-register :: form-register(${staff},${userFound})"></div>
-            <button type="submit" class="btn btn-outline-primary"><i class="fas fa-plus"></i> registrar</button>
+            <button type="submit" class="btn btn-outline-primary"><i class="fas fa-plus" th:text="${action}"></i></button>
             <a class="btn btn-outline-secondary" th:href="@{/agent/list}"><i class="fas fa-long-arrow-alt-left"></i></a>
         </form>
     </div>

@@ -1,7 +1,9 @@
 package com.jc.jpathymeleaf.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -12,8 +14,10 @@ public class City {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Size(min= 1, max= 30)
     private String name;
 
+    @Size(min=1, max=200)
     private String description;
 
     @OneToMany(mappedBy = "city")

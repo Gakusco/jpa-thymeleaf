@@ -33,12 +33,11 @@ public class PackageController {
 
     @GetMapping("/list")
     public String list(HttpServletRequest request, Model model){
-        if (request.getUserPrincipal() == null){
-            model.addAttribute("login","login");
+        if (request.getUserPrincipal() == null) {
+            model.addAttribute("login", "login");
             model.addAttribute("register", "register");
-        } else {
-            model.addAttribute("menuActive", "package");
         }
+        model.addAttribute("menuActive", "package");
         model.addAttribute("packages", packageService.findAll());
         return "package/list";
     }
@@ -57,10 +56,12 @@ public class PackageController {
     public String add(@Valid @ModelAttribute Package pack, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             model.addAttribute("cities", cityService.findAll());
+            model.addAttribute("title","Crear paquete");
+            model.addAttribute("action","Crear");
+            model.addAttribute("menuActive", "package");
             return "package/form";
         }
         pack.setEnable(true);
-        pack.setImage("image");
         packageService.save(pack);
         model.addAttribute("menuActive", "package");
         redirectAttributes.addFlashAttribute("success", "El paquete ha sido creado");
@@ -74,6 +75,7 @@ public class PackageController {
         model.addAttribute("cities", cityService.findAll());
         model.addAttribute("title","Editar paquete");
         model.addAttribute("action","Guardar");
+        model.addAttribute("menuActive","package");
         return "package/form";
     }
 
@@ -91,6 +93,10 @@ public class PackageController {
     @PostMapping("/edit")
     public String edit(@Valid @ModelAttribute Package pack,BindingResult result,Model model, RedirectAttributes redirectAttributes){
         if(result.hasErrors()){
+            model.addAttribute("cities", cityService.findAll());
+            model.addAttribute("title","Editar paquete");
+            model.addAttribute("action","Guardar");
+            model.addAttribute("menuActive","package");
             return "package/form";
         }
         packageService.save(pack);

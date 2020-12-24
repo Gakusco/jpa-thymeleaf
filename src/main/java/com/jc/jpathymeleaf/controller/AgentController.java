@@ -55,6 +55,7 @@ public class AgentController {
     public String add(Model model){
         model.addAttribute("title","Registrar agente");
         model.addAttribute("staff", new Staff());
+        model.addAttribute("action", "Registar");
         model.addAttribute("menuActive", "agent");
         return "agent/form";
     }
@@ -67,6 +68,7 @@ public class AgentController {
             model.addAttribute("userFound",userFound);
             model.addAttribute("title","Registrar agente");
             model.addAttribute("menuActive", "agent");
+            model.addAttribute("action", "Registar");
             return "agent/form";
         }
         staff.getUser().setPassword(bCryptPasswordEncoder.encode(staff.getUser().getPassword()));
@@ -101,6 +103,7 @@ public class AgentController {
         staff.ifPresent(s -> model.addAttribute("staff", s));
         model.addAttribute("title","Editar agente");
         model.addAttribute("menuActive","agent");
+        model.addAttribute("action", "Guardar");
         return "agent/form";
     }
 
@@ -110,6 +113,7 @@ public class AgentController {
         if (result.hasErrors()){
             model.addAttribute("title","Editar agente");
             model.addAttribute("menuActive","agent");
+            model.addAttribute("action", "Guardar");
             return "agent/form";
         }
         System.out.println(staff.getId());

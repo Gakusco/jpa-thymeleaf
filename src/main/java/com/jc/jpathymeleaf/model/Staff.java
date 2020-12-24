@@ -4,11 +4,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name="staff")
@@ -18,12 +18,12 @@ public class Staff {
     @Column(name="id")
     private int id;
 
-    @Size(min = 2, max =20, message= "El tamaño del nombre debe estar entre 2 y 20")
+    @Size(min = 1, max =60)
     private String name;
 
     private String run;
 
-    @NotNull(message = "Debe ingresar su fecha de nacimiento")
+    @NotNull(message = "debe ingresar su fecha de nacimiento")
     @Past
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birth;

@@ -2,6 +2,7 @@ package com.jc.jpathymeleaf.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -14,10 +15,10 @@ public class User {
     private int id;
 
     @Column(unique=true)
-    @NotEmpty
+    @Size(min = 1, max = 100)
     private String username;
 
-    @NotEmpty
+    @Size(min = 1, max = 100)
     private String password;
 
     private boolean enabled;

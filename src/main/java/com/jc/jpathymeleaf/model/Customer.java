@@ -1,7 +1,6 @@
 package com.jc.jpathymeleaf.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.persistence.*;
@@ -13,7 +12,6 @@ import javax.validation.constraints.Size;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -25,7 +23,7 @@ public class Customer {
     @Column(name="id")
     private int id;
 
-    @Size(min = 2, max =20, message= "El tamaño del nombre debe estar entre 2 y 20")
+    @Size(min = 1, max =60)
     private String name;
 
     private String run;

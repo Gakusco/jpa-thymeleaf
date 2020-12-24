@@ -56,6 +56,8 @@ public class CustomerController {
         Optional<Customer> customerOptional = customerService.findById(user.getId());
         customerOptional.ifPresent(customer -> refreshAddPackage(model, customer));
         model.addAttribute("menuActive","customer");
+        model.addAttribute("title","Mis paquetes");
+        model.addAttribute("action", "Registar");
         return "customer/add-package";
     }
 
@@ -64,6 +66,7 @@ public class CustomerController {
         model.addAttribute("title","Registrar cliente");
         model.addAttribute("customer", new Customer());
         model.addAttribute("menuActive", "customer");
+        model.addAttribute("action", "Registar");
         return "customer/form";
     }
 
@@ -75,6 +78,7 @@ public class CustomerController {
             model.addAttribute("userFound",userFound);
              model.addAttribute("title","Registrar cliente");
              model.addAttribute("menuActive", "customer");
+            model.addAttribute("action", "Registar");
             return "customer/form";
         }
         IndexController.saveUser(customer, bCryptPasswordEncoder, userService, authorityService, customerService);
@@ -86,7 +90,10 @@ public class CustomerController {
     @GetMapping("/package/{idCustomer}")
     public String addPackage(Model model, @PathVariable String idCustomer) {
         Optional<Customer> customerOptional = customerService.findById(Integer.parseInt(idCustomer));
-        customerOptional.ifPresent(customer -> refreshAddPackage(model, customer));
+        customerOptional.ifPresent(customer -> {
+            refreshAddPackage(model, customer);
+            model.addAttribute("title","Paquetes del cliente "+customerOptional.get().getName());
+        });
         return "customer/add-package";
     }
 
@@ -101,6 +108,7 @@ public class CustomerController {
             packOptional.get().addCustomer(customerOptional.get());
             packageService.save(packOptional.get());
             refreshAddPackage(model, customerOptional.get());
+            model.addAttribute("title","Paquetes del cliente "+customerOptional.get().getName());
         }
         return "customer/add-package :: tabla-packages";
     }
@@ -116,6 +124,7 @@ public class CustomerController {
             packOptional.get().removeCustomer(customerOptional.get());
             packageService.save(packOptional.get());
             refreshAddPackage(model, customerOptional.get());
+            model.addAttribute("title","Paquetes del cliente "+customerOptional.get().getName());
         }
         return "customer/add-package :: tabla-packages";
     }
@@ -152,6 +161,7 @@ public class CustomerController {
         customer.ifPresent(c -> model.addAttribute("customer", c));
         model.addAttribute("title","Editar cliente");
         model.addAttribute("menuActive","customer");
+        model.addAttribute("action", "Guardar");
         return "customer/form";
     }
 
@@ -161,6 +171,7 @@ public class CustomerController {
         if (result.hasErrors()){
             model.addAttribute("title","Editar cliente");
             model.addAttribute("menuActive","customer");
+            model.addAttribute("action", "Guardar");
             return "customer/form";
         }
         customerService.save(customer);
