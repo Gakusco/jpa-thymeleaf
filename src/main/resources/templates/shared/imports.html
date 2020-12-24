@@ -2,6 +2,7 @@
 
     <div hidden="hidden" th:fragment="alerts">
         <div id="success-alert" class="alert alert-success" th:if="${success}" th:text="${success}"></div>
+        <div id="danger-alert" class="alert alert-danger" th:if="${danger}" th:text="${danger}"></div>
     </div>
 
     <script th:fragment="js-alerts" type="text/javascript">
@@ -9,6 +10,11 @@
         const success  = $("#success-alert")
         if (success.text()) {
             Swal.fire("¡Éxito!", success.text(), "success")
+        }
+
+        const danger  = $("#danger-alert")
+        if (danger.text()) {
+            Swal.fire("¡Alto!", danger.text(), "error")
         }
     </script>
 
@@ -51,6 +57,7 @@
             /*]]>*/
         </script>
     </div>
+
 
     <div th:fragment="js-add-customer">
         <script th:inline="javascript" type="text/javascript">

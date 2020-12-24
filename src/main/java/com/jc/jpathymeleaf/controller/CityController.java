@@ -1,7 +1,6 @@
 package com.jc.jpathymeleaf.controller;
 
 import com.jc.jpathymeleaf.model.City;
-import com.jc.jpathymeleaf.model.Package;
 import com.jc.jpathymeleaf.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -72,6 +71,18 @@ public class CityController {
         cityService.save(city);
         model.addAttribute("menuActive","city");
         redirectAttributes.addFlashAttribute("success", "El pais a sido editado");
+        return "redirect:/city/list";
+    }
+
+    @GetMapping("/delete/{idCity}")
+    public String delete(@PathVariable String idCity, RedirectAttributes redirectAttributes){
+        try{
+            cityService.deleteById(Integer.parseInt(idCity));
+        } catch (Exception e){
+            redirectAttributes.addFlashAttribute("danger","La ciudad tiene paquetes asociados, imposible de eliminar");
+            return "redirect:/city/list";
+        }
+        redirectAttributes.addFlashAttribute("success","La ciudad ha sido eliminada");
         return "redirect:/city/list";
     }
 }
