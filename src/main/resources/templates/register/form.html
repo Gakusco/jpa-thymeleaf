@@ -15,7 +15,6 @@
         <form class="form" th:action="@{/register/save}" th:object="${customer}" method="post">
             <div th:replace="shared/form-register :: form-register(${customer},${userFound})"></div>
             <button type="submit" class="btn btn-outline-primary"><i class="fas fa-plus"></i> registrar</button>
-            <a class="btn btn-outline-secondary" th:href="@{/customer/list}"><i class="fas fa-long-arrow-alt-left"></i></a>
         </form>
     </div>
 </div>

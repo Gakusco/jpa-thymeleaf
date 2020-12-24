@@ -54,6 +54,7 @@ public class IndexController {
         model.addAttribute("customer", new Customer());
         model.addAttribute("register", "register");
         model.addAttribute("menuActive", "register");
+        model.addAttribute("login","login");
         return "register/form";
     }
 
@@ -66,6 +67,7 @@ public class IndexController {
             model.addAttribute("title","Registrar cliente");
             model.addAttribute("register", "register");
             model.addAttribute("menuActive", "register");
+            model.addAttribute("login","login");
             return "register/form";
         }
         saveUser(customer, bCryptPasswordEncoder, userService, authorityService, customerService);
