@@ -22,9 +22,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/manager")
+@RequestMapping("/admin")
 @SessionAttributes("staff")
-public class ManagerController {
+public class AdminController {
 
     @Autowired
     private StaffService staffService;
@@ -33,114 +33,117 @@ public class ManagerController {
     private UserService userService;
 
     @Autowired
-    CustomerValidation customerValidation;
+    private CustomerValidation customerValidation;
 
     @Autowired
-    StaffValidation staffValidation;
+    private StaffValidation staffValidation;
 
     @Autowired
-    AuthorityService authorityService;
+    private AuthorityService authorityService;
 
     @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     @GetMapping("/list")
     public String listar(Model model){
-        reloadListManager(model);
-        return "manager/list";
+        reloadListAdmin(model);
+        return "admin/list";
     }
 
     @GetMapping("/add")
     public String add(Model model){
-        model.addAttribute("title","Registrar gerente");
+        model.addAttribute("title","Registrar administrador");
         model.addAttribute("staff", new Staff());
-        model.addAttribute("menuActive", "manager");
+        model.addAttribute("menuActive", "admin");
         model.addAttribute("action", "Registrar");
-        return "manager/form";
+        return "admin/form";
     }
 
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute Staff staff, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-         staffValidation.validate(staff, result);
+        staffValidation.validate(staff, result);
         User userFound = userService.findByUsername(staff.getUser().getUsername());
         if (result.hasErrors() || userFound != null){
             model.addAttribute("userFound",userFound);
-            model.addAttribute("title","Registrar gerente");
-            model.addAttribute("menuActive", "manager");
+            model.addAttribute("title","Registrar administrador");
+            model.addAttribute("menuActive", "admin");
             model.addAttribute("action", "Registrar");
-            return "manager/form";
+            return "admin/form";
         }
         staff.getUser().setPassword(bCryptPasswordEncoder.encode(staff.getUser().getPassword()));
         staff.getUser().setEnabled(true);
         User user = userService.save(staff.getUser());
         staff.setUser(user);
-        Authority authority = new Authority("ROLE_GERENTE");
+        Authority authority = new Authority("ROLE_ADMINISTRADOR");
         authority.setUser(user);
         authorityService.save(authority);
         staff.setId(user.getId());
         staffService.save(staff);
-        model.addAttribute("menuActive", "manager");
-        redirectAttributes.addFlashAttribute("success", "El gerente ha sido registrado");
-        return "redirect:/manager/list";
+        model.addAttribute("menuActive", "admin");
+        redirectAttributes.addFlashAttribute("success", "El administrador ha sido registrado");
+        return "redirect:/admin/list";
     }
 
-    @GetMapping("/enable/{idManager}")
-    public String enable(Model model, @PathVariable String idManager){
-        isEnabled(true, model, idManager);
-        return "manager/list :: list-user";
+    @GetMapping("/enable/{idAdmin}")
+    public String enable(Model model, @PathVariable String idAdmin){
+        isEnabled(true, model, idAdmin);
+        return "admin/list :: list-user";
     }
 
-    @GetMapping("/disable/{idManager}")
-    public String disable(Model model, @PathVariable String idManager){
-        isEnabled(false, model, idManager);
-        return "manager/list :: list-user";
+    @GetMapping("/disable/{idAdmin}")
+    public String disable(Model model, @PathVariable String idAdmin){
+        isEnabled(false, model, idAdmin);
+        return "admin/list :: list-user";
     }
 
-    @GetMapping("/edit/{idManager}")
-    public String editManager(@PathVariable String idManager, Model model) {
-        Optional<Staff> staff = staffService.findById(Integer.parseInt(idManager));
+    @GetMapping("/edit/{idAdmin}")
+    public String editAdmin(@PathVariable String idAdmin, Model model) {
+        Optional<Staff> staff = staffService.findById(Integer.parseInt(idAdmin));
+        System.out.println(staff.get().getUser().getUsername());
+        System.out.println(staff.get().getUser().getPassword());
         staff.ifPresent(s -> model.addAttribute("staff", s));
-        model.addAttribute("title","Editar gerente");
-        model.addAttribute("menuActive","manager");
+        model.addAttribute("title","Editar administrador");
+        model.addAttribute("menuActive","admin");
         model.addAttribute("action", "Guardar");
-        return "manager/form";
+        return "admin/form";
     }
 
     @PostMapping("/edit")
     public String edit(@Valid @ModelAttribute Staff staff, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
         staffValidation.validate(staff, result);
         if (result.hasErrors()){
-            model.addAttribute("title","Editar gerente");
-            model.addAttribute("menuActive","manager");
+            model.addAttribute("title","Editar administrador");
+            model.addAttribute("menuActive","admin");
             model.addAttribute("action", "Guardar");
-            return "manager/form";
+            return "admin/form";
         }
+        System.out.println(staff.getUser().getUsername());
+        System.out.println(staff.getUser().getPassword());
         staffService.save(staff);
-        redirectAttributes.addFlashAttribute("success", "El gerente a sido modificado");
-        return "redirect:/manager/list";
+        redirectAttributes.addFlashAttribute("success", "El administrador a sido modificado");
+        return "redirect:/admin/list";
     }
 
-    private void isEnabled(Boolean change, Model model, String idManager) {
-        Optional<Staff> staffOptional = staffService.findById(Integer.parseInt(idManager));
+    private void isEnabled(Boolean change, Model model, String idAdmin) {
+        Optional<Staff> staffOptional = staffService.findById(Integer.parseInt(idAdmin));
         staffOptional.ifPresent(staff -> {
             staff.getUser().setEnabled(change);
             userService.save(staff.getUser());
-            reloadListManager(model);
+            reloadListAdmin(model);
         });
     }
 
-    private void reloadListManager(Model model) {
+    private void reloadListAdmin(Model model) {
         List<Staff> staffs = staffService.findAll();
-        List<User> users = userService.findByAuthoritiesAuthority("ROLE_GERENTE");
-        List<Staff> managers = new ArrayList<>();
+        List<User> users = userService.findByAuthoritiesAuthority("ROLE_ADMINISTRADOR");
+        List<Staff> admins = new ArrayList<>();
         for (User user: users){
             for (Staff s : staffs){
-                if(user.getId() == s.getUser().getId()) managers.add(s);
+                if(user.getId() == s.getUser().getId()) admins.add(s);
             }
         }
-        model.addAttribute("managers", managers);
-        model.addAttribute("menuActive", "manager");
+        model.addAttribute("admins", admins);
+        model.addAttribute("menuActive", "admin");
     }
-
 }

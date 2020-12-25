@@ -24,25 +24,25 @@ import java.util.Optional;
 public class CustomerController {
 
     @Autowired
-    CustomerService customerService;
+    private CustomerService customerService;
 
     @Autowired
-    PackageService packageService;
+    private PackageService packageService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    AuthorityService authorityService;
+    private AuthorityService authorityService;
 
     @Autowired
-    StaffService staffService;
+    private StaffService staffService;
 
     @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    CustomerValidation customerValidation;
+    private CustomerValidation customerValidation;
 
     @GetMapping("/list")
     public String listar(Model model){

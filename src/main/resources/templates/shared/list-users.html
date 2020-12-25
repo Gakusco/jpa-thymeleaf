@@ -10,10 +10,13 @@
                 <th scope="col">Nombre</th>
                 <th scope="col" class="text-center">Run</th>
                 <th scope="col">Fecha nacimiento</th>
-                <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_GERENTE')" scope="col" th:if="${menuActive == 'customer' or menuActive == 'manager' or menuActive == 'agent'}" class="text-center">Habilitar/Deshabilitar</th>
+                <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_GERENTE')" scope="col"
+                    th:if="${menuActive == 'customer' or menuActive == 'manager' or menuActive == 'agent' or menuActive=='admin'}" class="text-center">Habilitar/Deshabilitar</th>
                 <th th:if="${menuActive == 'customer'}" scope="col" class="text-center">Paquetes</th>
-                <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_GERENTE')" scope="col" th:if="${menuActive == 'package'}" class="text-center">Eliminar</th>
-                <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_GERENTE')" scope="col" th:if="${menuActive == 'customer' or menuActive == 'manager' or menuActive == 'agent'}" class="text-center">Editar</th>
+                <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_GERENTE')" scope="col"
+                    th:if="${menuActive == 'package'}" class="text-center">Eliminar</th>
+                <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_GERENTE')" scope="col"
+                    th:if="${menuActive == 'customer' or menuActive == 'manager' or menuActive == 'agent' or menuActive=='admin'}" class="text-center">Editar</th>
             </tr>
             </thead>
             <tbody th:each="user, iterador: ${users}">
@@ -22,7 +25,8 @@
                 <td th:text="${user.name}"></td>
                 <td th:text="${user.run}" class="text-center"></td>
                 <td th:text="${#temporals.format(user.birth, 'dd MMMM yyyy')}"></td>
-                <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_GERENTE')" th:if="${menuActive == 'customer' or menuActive == 'manager' or menuActive == 'agent'}" class="text-center">
+                <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_GERENTE')"
+                    th:if="${menuActive == 'customer' or menuActive == 'manager' or menuActive == 'agent' or menuActive=='admin'}" class="text-center">
                     <button th:if="${user.user.enabled == true}"
                             class="btn btn-outline-success"
                             title="deshabilitar"
@@ -55,7 +59,7 @@
                         <i class="far fa-trash-alt"></i>
                     </a></td>
                 <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_GERENTE')"
-                    th:if="${menuActive == 'customer' or menuActive == 'manager' or menuActive == 'agent'}" class="text-center">
+                    th:if="${menuActive == 'customer' or menuActive == 'manager' or menuActive == 'agent' or menuActive=='admin'}" class="text-center">
                     <a th:if="${user.user.enabled}" class="btn btn-outline-success"
                        th:href="@{'/'+${menuActive}+'/edit/'+${user.id}}"
                        th:title="'Editar '+${menuActive}">

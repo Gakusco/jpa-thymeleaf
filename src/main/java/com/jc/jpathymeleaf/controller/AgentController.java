@@ -33,16 +33,16 @@ public class AgentController {
     private UserService userService;
 
     @Autowired
-    CustomerValidation customerValidation;
+    private CustomerValidation customerValidation;
 
     @Autowired
-    StaffValidation staffValidation;
+    private StaffValidation staffValidation;
 
     @Autowired
-    AuthorityService authorityService;
+    private AuthorityService authorityService;
 
     @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     @GetMapping("/list")
@@ -55,7 +55,7 @@ public class AgentController {
     public String add(Model model){
         model.addAttribute("title","Registrar agente");
         model.addAttribute("staff", new Staff());
-        model.addAttribute("action", "Registar");
+        model.addAttribute("action", "Registrar");
         model.addAttribute("menuActive", "agent");
         return "agent/form";
     }
@@ -68,7 +68,7 @@ public class AgentController {
             model.addAttribute("userFound",userFound);
             model.addAttribute("title","Registrar agente");
             model.addAttribute("menuActive", "agent");
-            model.addAttribute("action", "Registar");
+            model.addAttribute("action", "Registrar");
             return "agent/form";
         }
         staff.getUser().setPassword(bCryptPasswordEncoder.encode(staff.getUser().getPassword()));
@@ -116,7 +116,6 @@ public class AgentController {
             model.addAttribute("action", "Guardar");
             return "agent/form";
         }
-        System.out.println(staff.getId());
         staffService.save(staff);
         redirectAttributes.addFlashAttribute("success", "El agente ha sido modificado");
         return "redirect:/agent/list";
